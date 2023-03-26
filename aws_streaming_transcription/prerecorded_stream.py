@@ -35,16 +35,23 @@ REGION = "us-west-2"
 
 
 class MyEventHandler(TranscriptResultStreamHandler):
+    def __init__(self, output_stream):
+        super().__init__(output_stream)
+        self.all_results = [] 
+        self.last = "***"
+
     async def handle_transcript_event(self, transcript_event: TranscriptEvent):
-        # This handler can be implemented to handle transcriptions as needed.
-        # Here's an example to get started.
         results = transcript_event.transcript.results
         for result in results:
             for alt in result.alternatives:
-                print(alt.transcript)
+                if self.last in alt.transcript:
+                    self.all_results[-1] = alt.transcript
+                else:
+                    self.all_results.append(alt.transcript)
+                self.last = alt.transcript
 
 
-async def basic_transcribe():
+async def basic_transcribe(audio_path : str):
     # Setup up our client with our chosen AWS region
     client = TranscribeStreamingClient(region=REGION)
 
@@ -59,7 +66,7 @@ async def basic_transcribe():
         # NOTE: For pre-recorded files longer than 5 minutes, the sent audio
         # chunks should be rate limited to match the realtime bitrate of the
         # audio stream to avoid signing issues.
-        async with aiofile.AIOFile(AUDIO_PATH, "rb") as afp:
+        async with aiofile.AIOFile(audio_path, "rb") as afp:
             reader = aiofile.Reader(afp, chunk_size=CHUNK_SIZE)
             await apply_realtime_delay(
                 stream, reader, BYTES_PER_SAMPLE, SAMPLE_RATE, CHANNEL_NUMS
@@ -70,7 +77,4 @@ async def basic_transcribe():
     handler = MyEventHandler(stream.output_stream)
     await asyncio.gather(write_chunks(), handler.handle_events())
 
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(basic_transcribe())
-loop.close()
+    return handler.all_results

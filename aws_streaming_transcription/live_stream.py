@@ -11,15 +11,25 @@ https://python-sounddevice.readthedocs.io/en/0.3.7/
 sd.decault.device = #
 '''
 
-audio_min_rms = 40
+audio_min_rms = 100
 max_low_audio_flag = 20
 
 class MyEventHandler(TranscriptResultStreamHandler):
+    def __init__(self, output_stream):
+        super().__init__(output_stream)
+        self.all_results = [] 
+        self.last = "***"
+
     async def handle_transcript_event(self, transcript_event: TranscriptEvent):
         results = transcript_event.transcript.results
         for result in results:
             for alt in result.alternatives:
-                print(alt.transcript)
+                if self.last in alt.transcript:
+                    self.all_results[-1] = alt.transcript
+                else:
+                    self.all_results.append(alt.transcript)
+                self.last = alt.transcript
+                
 
 
 async def basic_transcribe():
@@ -58,7 +68,6 @@ async def basic_transcribe():
     handler = MyEventHandler(stream.output_stream)
     await asyncio.gather(write_chunks(), handler.handle_events())
 
+    return handler.all_results
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(basic_transcribe())
-loop.close()
+

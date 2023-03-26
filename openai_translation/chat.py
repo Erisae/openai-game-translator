@@ -11,6 +11,6 @@ def tranlate_sentence(s, language):
       ]
     )
     print("translation success...")
-    return completion.choices[0].message.content.lstrip()[1:]
+    return completion.choices[0].message.content.lstrip()[1:] 
 
 
