@@ -2,6 +2,7 @@ import asyncio
 import sounddevice as sd
 import numpy as np
 
+from difflib import SequenceMatcher
 from amazon_transcribe.client import TranscribeStreamingClient
 from amazon_transcribe.handlers import TranscriptResultStreamHandler
 from amazon_transcribe.model import TranscriptEvent
@@ -29,6 +30,22 @@ class MyEventHandler(TranscriptResultStreamHandler):
                 else:
                     self.all_results.append(alt.transcript)
                 self.last = alt.transcript
+
+def similarity(a, b):
+    return SequenceMatcher(None, a, b).ratio()
+
+def select_result(sentences):
+    # filter and concact
+    s = ""
+    last = ""
+    for cur in sentences:
+        if similarity(last, cur) < 0.5: # not similar: concact
+            s += last
+            last = cur
+        elif len(last) < len(cur): # similar and longer: update
+            last = cur
+    s += last
+    return ''.join(s)
                 
 
 
@@ -68,6 +85,10 @@ async def basic_transcribe():
     handler = MyEventHandler(stream.output_stream)
     await asyncio.gather(write_chunks(), handler.handle_events())
 
-    return handler.all_results
+    s = select_result(handler.all_results)
+    print("transcription success···")
+    print(s)
+
+    return s
 
 
