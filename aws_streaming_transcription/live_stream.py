@@ -12,9 +12,6 @@ https://python-sounddevice.readthedocs.io/en/0.3.7/
 sd.decault.device = #
 '''
 
-audio_min_rms = 100
-max_low_audio_flag = 20
-
 class MyEventHandler(TranscriptResultStreamHandler):
     def __init__(self, output_stream):
         super().__init__(output_stream)
@@ -49,7 +46,7 @@ def select_result(sentences):
                 
 
 
-async def basic_transcribe():
+async def basic_transcribe(max_low_audio_flag=20, audio_min_rms=100):
     client = TranscribeStreamingClient(region="us-east-2")
 
     stream = await client.start_stream_transcription(
@@ -61,13 +58,10 @@ async def basic_transcribe():
     async def write_chunks():
         low_audio_flag = 0
         while True:
-           
             data = sd.rec(1024*8, samplerate=16000, channels=1, blocking=True, dtype='int16')
 
             data[np.isnan(data)]=0
             rms  = np.sqrt(np.mean(np.square(data)))
-
-            # print(low_audio_flag)
 
             low_audio_flag = 0 if rms > audio_min_rms else low_audio_flag + 1
 
@@ -90,5 +84,4 @@ async def basic_transcribe():
     print(s)
 
     return s
-
 

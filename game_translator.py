@@ -1,5 +1,5 @@
 from xunfei_speed_transcription.ost_fast import xf_transcriptor
-from openai_translation.chat import tranlate_sentence
+from openai_translation.chat import translate_sentence
 from audio.record import Detector
 
 import aws_streaming_transcription.live_stream as live_stream
@@ -75,12 +75,17 @@ class translator(object):
         elif args.transcription_model == 'aws_live':
             text = self.aws_live_transcription()
 
-        res = tranlate_sentence(text, self.target_language)
+        res = translate_sentence(text, self.target_language)
         return res
 
 if __name__== "__main__":
     new_translator = translator()
     new_translator.openai_translation()
+
+# if __package__ is None:
+#     print("This module is a top-level package")
+# else:
+#     print("This module is not a top-level package")
 
 
 # todo: language change

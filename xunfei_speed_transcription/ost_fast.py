@@ -46,9 +46,9 @@ class xf_transcriptor(object):
             # "callback_url": "http://IP:port/xxx/"
         }
 
-    def img_read(self, path):
-        with open(path, 'rb') as fo:
-            return fo.read()
+    # def img_read(self, path):
+    #     with open(path, 'rb') as fo:
+    #         return fo.read()
 
     def hashlib_256(self, res):
         m = hashlib.sha256(bytes(res.encode(encoding='utf-8'))).digest()

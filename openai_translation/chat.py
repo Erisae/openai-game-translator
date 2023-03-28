@@ -1,7 +1,6 @@
-import os
 import openai
 
-def tranlate_sentence(s, language):
+def translate_sentence(s, language):
     
     prompt = "translate to " + language + " : " + s
     completion = openai.ChatCompletion.create(
