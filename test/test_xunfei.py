@@ -12,10 +12,7 @@ def contains_substring(string, substring):
     return substring in string
 
 class TestXFTranscriptor(unittest.TestCase):
-    def setUp(self, appid, apikey, apisecret): # 
-        self.appid = appid
-        self.apikey = apikey
-        self.apisecret = apisecret
+    def setUp(self): # 
         self.file_path = "../audio/audio_sample_little.wav"
         self.transcriptor = xf_transcriptor(self.appid, self.apikey, self.apisecret, self.file_path)
     

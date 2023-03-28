@@ -20,7 +20,6 @@ class TestLiveStream(unittest.TestCase):
             # Run the function under test and get the result
             self.loop = asyncio.get_event_loop()
             result = self.loop.run_until_complete(basic_transcribe(max_low_audio_flag=0))
-            self.loop.close()
 
             # Check that the result is as expected
             self.assertIsNotNone(result)

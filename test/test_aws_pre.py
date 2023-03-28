@@ -17,13 +17,12 @@ class TestPrerecorded(unittest.TestCase):
     def setUp(self):
         self.filepath = "../audio/audio_sample_little.wav"
 
-    def test_transcription_success(self):
+    def test_transcription(self):
         # Set up mock audio data
         with patch('sys.stdout', new=io.StringIO()) as fake_out:
             # Run the function under test and get the result
-            self.loop = asyncio.get_event_loop()
-            result = self.loop.run_until_complete(basic_transcribe(self.filepath))
-            self.loop.close()
+            loop1 = asyncio.get_event_loop()
+            result = loop1.run_until_complete(basic_transcribe(self.filepath))
 
             # Check that the result is as expected
             self.assertIsNotNone(result)

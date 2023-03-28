@@ -2,7 +2,6 @@ import unittest
 import os 
 import sys
 import io
-import openai
 
 sys.path.append(os.path.abspath('../'))
 
