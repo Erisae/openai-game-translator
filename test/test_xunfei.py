@@ -26,7 +26,7 @@ class TestXFTranscriptor(unittest.TestCase):
             result = self.transcriptor.get_result()
             self.assertIsNotNone(result)
             self.assertEqual(result, '科大讯飞是中国最大的智能语音技术提供商。')
-            self.assertTrue(contains_substring(fake_out.getvalue().strip(), 'transcription success···'))
+            self.assertTrue(contains_substring(fake_out.getvalue().strip(), 'transcription success...'))
 
 if __name__== "__main__":
     unittest.main()

@@ -8,6 +8,7 @@ from test_aws_live import TestLiveStream
 from test_aws_pre import TestPrerecorded
 from test_openai import TestOpenai
 from test_record import TestRecord
+from test_game_translator import TranslatorTest
 
 parser = argparse.ArgumentParser(description='Description of your program')
 parser.add_argument('--xunfei_appid', required=True, type=str, help='xunfei transcription appid')
@@ -22,14 +23,21 @@ if __name__== "__main__":
     test_suite = unittest.TestSuite()
 
     # add testsuites
-    TestXFTranscriptor.appid = args.xunfei_appid
-    TestXFTranscriptor.apikey = args.xunfei_apikey
-    TestXFTranscriptor.apisecret = args.xunfei_apisecret
-    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestXFTranscriptor))
-    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestPrerecorded))
-    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestLiveStream))
-    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestOpenai))
-    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestRecord))
+    # TestXFTranscriptor.appid = args.xunfei_appid
+    # TestXFTranscriptor.apikey = args.xunfei_apikey
+    # TestXFTranscriptor.apisecret = args.xunfei_apisecret
+    # test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestXFTranscriptor))
+    # test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestPrerecorded))
+    # test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestLiveStream))
+    # test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestOpenai))
+    # test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestRecord))
+
+    # add integration test
+    TranslatorTest.appid = args.xunfei_appid
+    TranslatorTest.apikey = args.xunfei_apikey
+    TranslatorTest.apisecret = args.xunfei_apisecret
+    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TranslatorTest))
+    
 
     # run all tests and generate coverage report
     cov = coverage.Coverage()

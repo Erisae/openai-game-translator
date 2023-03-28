@@ -169,7 +169,7 @@ class xf_transcriptor(object):
                 # with open("./test.json", 'w', encoding ='utf8') as json_file:
                 #     json.dump(result, json_file, indent=6, ensure_ascii=False)
 
-                print("transcription success···")
+                print("transcription success...")
                 for a in result["data"]["result"]["lattice"][0]["json_1best"]["st"]["rt"][0]["ws"]:
                     sentence += a["cw"][0]["w"]
                 print(sentence)

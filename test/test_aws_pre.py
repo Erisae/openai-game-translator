@@ -26,7 +26,7 @@ class TestPrerecorded(unittest.TestCase):
 
             # Check that the result is as expected
             self.assertIsNotNone(result)
-            self.assertTrue(contains_substring(fake_out.getvalue().strip(), 'transcription success···'))
+            self.assertTrue(contains_substring(fake_out.getvalue().strip(), 'transcription success...'))
 
 
     def test_select_result(self):
