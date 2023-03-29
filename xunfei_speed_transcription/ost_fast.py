@@ -22,12 +22,13 @@ from xunfei_speed_transcription import seve_file
 
 
 # create and query
-class xf_transcriptor():
+class xf_transcriptor:
     """
     A class representing a xf_transcriptor.
 
     Attributes:
     """
+
     def __init__(self, appid, apikey, apisecret, file_path):
         # POST request
         self.Host = "ost-api.xfyun.cn"
@@ -55,7 +56,7 @@ class xf_transcriptor():
         self.BusinessArgsCreate = {
             "language": "zh_cn",
             "accent": "mandarin",
-            "language_type" : 1,
+            "language_type": 1,
             "domain": "pro_ost_ed",
             # "callback_url": "http://IP:port/xxx/"
         }
@@ -65,8 +66,8 @@ class xf_transcriptor():
         A function to .
 
         """
-        m = hashlib.sha256(bytes(res.encode(encoding='utf-8'))).digest()
-        result = "SHA-256=" + base64.b64encode(m).decode(encoding='utf-8')
+        m = hashlib.sha256(bytes(res.encode(encoding="utf-8"))).digest()
+        result = "SHA-256=" + base64.b64encode(m).decode(encoding="utf-8")
         return result
 
     def httpdate(self, dt):
@@ -76,10 +77,29 @@ class xf_transcriptor():
         The supplied date must be in UTC.
         """
         weekday = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][dt.weekday()]
-        month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",
-                 "Oct", "Nov", "Dec"][dt.month - 1]
-        return "%s, %02d %s %04d %02d:%02d:%02d GMT" % (weekday, dt.day, month,
-                                                        dt.year, dt.hour, dt.minute, dt.second)
+        month = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+        ][dt.month - 1]
+        return "%s, %02d %s %04d %02d:%02d:%02d GMT" % (
+            weekday,
+            dt.day,
+            month,
+            dt.year,
+            dt.hour,
+            dt.minute,
+            dt.second,
+        )
 
     def generateSignature(self, digest, uri):
         """
@@ -88,14 +108,15 @@ class xf_transcriptor():
         """
         signature_str = "host: " + self.Host + "\n"
         signature_str += "date: " + self.Date + "\n"
-        signature_str += self.HttpMethod + " " + uri \
-                         + " " + self.HttpProto + "\n"
+        signature_str += self.HttpMethod + " " + uri + " " + self.HttpProto + "\n"
         signature_str += "digest: " + digest
-        signature = hmac.new(bytes(self.Secret.encode('utf-8')),
-                             bytes(signature_str.encode('utf-8')),
-                             digestmod=hashlib.sha256).digest()
+        signature = hmac.new(
+            bytes(self.Secret.encode("utf-8")),
+            bytes(signature_str.encode("utf-8")),
+            digestmod=hashlib.sha256,
+        ).digest()
         result = base64.b64encode(signature)
-        return result.decode(encoding='utf-8')
+        return result.decode(encoding="utf-8")
 
     def init_header(self, data, uri):
         """
@@ -104,10 +125,11 @@ class xf_transcriptor():
         """
         digest = self.hashlib_256(data)
         sign = self.generateSignature(digest, uri)
-        auth_header = 'api_key="%s",algorithm="%s", ' \
-                      'headers="host date request-line digest", ' \
-                      'signature="%s"' \
-                      % (self.UserName, self.Algorithm, sign)
+        auth_header = (
+            'api_key="%s",algorithm="%s", '
+            'headers="host date request-line digest", '
+            'signature="%s"' % (self.UserName, self.Algorithm, sign)
+        )
         headers = {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -115,7 +137,7 @@ class xf_transcriptor():
             "Host": self.Host,
             "Date": self.Date,
             "Digest": digest,
-            "Authorization": auth_header
+            "Authorization": auth_header,
         }
         return headers
 
@@ -127,11 +149,7 @@ class xf_transcriptor():
         post_data = {
             "common": {"app_id": self.APPID},
             "business": self.BusinessArgsCreate,
-            "data": {
-                "audio_src": "http",
-                "audio_url": self.fileurl,
-                "encoding": "raw"
-            }
+            "data": {"audio_src": "http", "audio_url": self.fileurl, "encoding": "raw"},
         }
         body = json.dumps(post_data)
         return body
@@ -143,9 +161,7 @@ class xf_transcriptor():
         """
         post_data = {
             "common": {"app_id": self.APPID},
-            "business": {
-                "task_id": task_id,
-            },
+            "business": {"task_id": task_id,},
         }
         body = json.dumps(post_data)
         return body
@@ -197,30 +213,39 @@ class xf_transcriptor():
 
         """
         # file upload
-        api = seve_file.SeveFile(app_id=self.APPID, api_key=self.UserName, \
-                                 api_secret=self.Secret, upload_file_path=self.FilePath)
+        api = seve_file.SeveFile(
+            app_id=self.APPID,
+            api_key=self.UserName,
+            api_secret=self.Secret,
+            upload_file_path=self.FilePath,
+        )
         file_total_size = os.path.getsize(self.FilePath)
         if file_total_size < 31457280:
-            self.fileurl = api.gene_params('/upload')['data']['url']
+            self.fileurl = api.gene_params("/upload")["data"]["url"]
         else:
-            self.fileurl = api.gene_params('/mpupload/upload')
+            self.fileurl = api.gene_params("/mpupload/upload")
 
     def get_result(self):
         """
         A function to get result
 
         """
-        task_id = self.task_create()['data']['task_id']
+        task_id = self.task_create()["data"]["task_id"]
         sentence = ""
         while True:
             result = self.task_query(task_id)
-            if isinstance(result, dict) and result['data']['task_status'] != '1' and result['data'][
-                'task_status'] != '2':
+            if (
+                isinstance(result, dict)
+                and result["data"]["task_status"] != "1"
+                and result["data"]["task_status"] != "2"
+            ):
                 # with open("./test.json", 'w', encoding ='utf8') as json_file:
                 #     json.dump(result, json_file, indent=6, ensure_ascii=False)
 
                 print("transcription success...")
-                for a in result["data"]["result"]["lattice"][0]["json_1best"]["st"]["rt"][0]["ws"]:
+                for a in result["data"]["result"]["lattice"][0]["json_1best"]["st"][
+                    "rt"
+                ][0]["ws"]:
                     sentence += a["cw"][0]["w"]
                 print(sentence)
                 break

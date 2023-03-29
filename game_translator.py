@@ -19,45 +19,71 @@ from audio.record import Detector
 from aws_streaming_transcription import live_stream
 from aws_streaming_transcription import prerecorded_stream
 
-parser = argparse.ArgumentParser(description='Description of your program')
-parser.add_argument('--file', type=str, default='./audio/test.wav', help='prerecorded file path')
-parser.add_argument('--xunfei_appid', type=str, help='xunfei transcription appid')
-parser.add_argument('--xunfei_apikey', type=str, help='xunfei transcription apikey')
-parser.add_argument('--xunfei_apisecret', type=str, help='xunfei transccription api secret')
-parser.add_argument('--openai_key', required=True, type=str, help='open ai translatio api key')
-parser.add_argument('-t', '--transcription_model', required=True, type=str, \
-                    choices=['xunfei', 'aws_pre', 'aws_live'], \
-                    help='xunfei and aws_pre need prerecorded audios, aws_live not')
-parser.add_argument('-o', '--output_language', required=True, type=str, \
-                    help='output text\'s language')
-parser.add_argument('--pre_recorded', required=True, type=int, choices=[0, 1], default=0, \
-                    help='when select 1, use audio that already exist')
+parser = argparse.ArgumentParser(description="Description of your program")
+parser.add_argument(
+    "--file", type=str, default="./audio/test.wav", help="prerecorded file path"
+)
+parser.add_argument("--xunfei_appid", type=str, help="xunfei transcription appid")
+parser.add_argument("--xunfei_apikey", type=str, help="xunfei transcription apikey")
+parser.add_argument(
+    "--xunfei_apisecret", type=str, help="xunfei transccription api secret"
+)
+parser.add_argument(
+    "--openai_key", required=True, type=str, help="open ai translatio api key"
+)
+parser.add_argument(
+    "-t",
+    "--transcription_model",
+    required=True,
+    type=str,
+    choices=["xunfei", "aws_pre", "aws_live"],
+    help="xunfei and aws_pre need prerecorded audios, aws_live not",
+)
+parser.add_argument(
+    "-o", "--output_language", required=True, type=str, help="output text's language"
+)
+parser.add_argument(
+    "--pre_recorded",
+    required=True,
+    type=int,
+    choices=[0, 1],
+    default=0,
+    help="when select 1, use audio that already exist",
+)
 
 args = parser.parse_args()
 openai.api_key = args.openai_key
 
-class gameTranslator():
+
+class gameTranslator:
     """
     A class representing a translator.
 
     Attributes:
     """
-    def __init__(self, transcription_model, filepath="", \
-                 xunfei_appid="", xunfei_apikey="", xunfei_apisecret="", \
-                 prerecorded=True, output_language="English"):
+
+    def __init__(
+        self,
+        transcription_model,
+        filepath="",
+        xunfei_appid="",
+        xunfei_apikey="",
+        xunfei_apisecret="",
+        prerecorded=True,
+        output_language="English",
+    ):
         self.filepath = ""
         self.transcription_model = transcription_model
-        if self.transcription_model == 'xunfei':
+        if self.transcription_model == "xunfei":
             self.appid = xunfei_appid
             self.apikey = xunfei_apikey
             self.apisecret = xunfei_apisecret
             self.filepath = filepath
 
-        if self.transcription_model == 'aws_pre':
+        if self.transcription_model == "aws_pre":
             self.filepath = filepath
         self.target_language = output_language
         self.pre_recorded = prerecorded
-
 
     def record_audio(self):
         """
@@ -74,7 +100,9 @@ class gameTranslator():
         """
         if not self.pre_recorded:
             self.record_audio()
-        transcriptor = xf_transcriptor(self.appid, self.apikey, self.apisecret, self.filepath)
+        transcriptor = xf_transcriptor(
+            self.appid, self.apikey, self.apisecret, self.filepath
+        )
         transcriptor.get_fileurl()
         content = transcriptor.get_result()
         return content
@@ -87,7 +115,9 @@ class gameTranslator():
         if not self.pre_recorded:
             self.record_audio()
         loop = asyncio.get_event_loop()
-        result = loop.run_until_complete(prerecorded_stream.basic_transcribe(self.filepath))
+        result = loop.run_until_complete(
+            prerecorded_stream.basic_transcribe(self.filepath)
+        )
         # loop.close()
         return result
 
@@ -107,23 +137,28 @@ class gameTranslator():
 
         """
         # first do transcription then translation
-        if self.transcription_model == 'xunfei':
+        if self.transcription_model == "xunfei":
             text = self.xunfei_transcription()
-        elif self.transcription_model == 'aws_pre':
+        elif self.transcription_model == "aws_pre":
             text = self.aws_prerecored_transcription()
-        elif self.transcription_model == 'aws_live':
+        elif self.transcription_model == "aws_live":
             text = self.aws_live_transcription()
 
         res = translate_sentence(text, self.target_language)
         return res
 
-if __name__== "__main__":
-    new_translator = gameTranslator(args.transcription_model, filepath=args.file, \
-            xunfei_appid=args.xunfei_appid, xunfei_apikey=args.xunfei_apikey, \
-            xunfei_apisecret=args.xunfei_apisecret, \
-            prerecorded=args.pre_recorded, output_language=args.output_language)
-    new_translator.openai_translation()
 
+if __name__ == "__main__":
+    new_translator = gameTranslator(
+        args.transcription_model,
+        filepath=args.file,
+        xunfei_appid=args.xunfei_appid,
+        xunfei_apikey=args.xunfei_apikey,
+        xunfei_apisecret=args.xunfei_apisecret,
+        prerecorded=args.pre_recorded,
+        output_language=args.output_language,
+    )
+    new_translator.openai_translation()
 
 
 # todo: language change
