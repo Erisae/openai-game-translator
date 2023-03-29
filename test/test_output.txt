@@ -22,4 +22,4 @@ Name                                                                            
 /Users/arika/Desktop/openai-game-translator/xunfei_speed_transcription/ost_fast.py                104     32    69%
 /Users/arika/Desktop/openai-game-translator/xunfei_speed_transcription/seve_file.py               126     83    34%
 -------------------------------------------------------------------------------------------------------------------
-TOTAL    
+TOTAL                                                                                             439    195    56% 
