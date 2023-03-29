@@ -43,4 +43,5 @@ jobs:
         xunfei_apisecret: ${{ secrets.XUNFEI_APISECRET }}
         openai_key: ${{ secrets.OPENAI_KEY  }}
       run: |
-        python ./test/test_all.py --xunfei_appid xunfei_appid --xunfei_apikey  xunfei_apikey --xunfei_apisecret xunfei_apisecret --openai_key openai_key 
+        cd test
+        python test_all.py --xunfei_appid xunfei_appid --xunfei_apikey  xunfei_apikey --xunfei_apisecret xunfei_apisecret --openai_key openai_key 
