@@ -1,17 +1,33 @@
-'''
+"""
 reference: https://github.com/dylanz666/pyaudio-learning
-'''
+"""
 import audioop
-import pyaudio
 import wave
+import pyaudio
 
 # streaming settings
 stream_format = pyaudio.paInt16
 pyaudio_instance = pyaudio.PyAudio()
 sample_width = pyaudio_instance.get_sample_size(stream_format)
 
-class Detector(object):
-    def __init__(self, channels=1, rate=44100, chunk=1024, audio_min_rms=500, max_low_audio_flag=100, recording=True, recording_file="test.wav"):
+
+class Detector:
+    """
+    A class representing a audio recorder.
+
+    Attributes:
+    """
+
+    def __init__(
+        self,
+        channels=1,
+        rate=44100,
+        chunk=1024,
+        audio_min_rms=500,
+        max_low_audio_flag=100,
+        recording=True,
+        recording_file="test.wav",
+    ):
         self.channels = channels
         self.rate = rate
         self.chunk = chunk
@@ -22,14 +38,20 @@ class Detector(object):
         self.audio_frames = []
 
     def detect_audio(self):
+        """
+        A function to detect audio.
+
+        """
 
         print("start detecting audio ... ")
 
-        stream = pyaudio_instance.open(format=stream_format,
-                                       channels=self.channels,
-                                       rate=self.rate,
-                                       input=True,
-                                       frames_per_buffer=self.chunk)
+        stream = pyaudio_instance.open(
+            format=stream_format,
+            channels=self.channels,
+            rate=self.rate,
+            input=True,
+            frames_per_buffer=self.chunk,
+        )
         low_audio_flag = 0
         detect_count = 0
         while True:
@@ -55,14 +77,15 @@ class Detector(object):
         return self
 
     def record(self):
+        """
+        A function to record audio.
 
-        wf = wave.open(self.recording_file, 'wb')
-        wf.setnchannels(self.channels)
-        wf.setsampwidth(sample_width)
-        wf.setframerate(self.rate)
-        wf.writeframes(b''.join(self.audio_frames))
-        wf.close()
+        """
+
+        waveframe = wave.open(self.recording_file, "wb")
+        waveframe.setnchannels(self.channels)
+        waveframe.setsampwidth(sample_width)
+        waveframe.setframerate(self.rate)
+        waveframe.writeframes(b"".join(self.audio_frames))
+        waveframe.close()
         return self
-
-
-
