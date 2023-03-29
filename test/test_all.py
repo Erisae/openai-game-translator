@@ -23,14 +23,14 @@ if __name__== "__main__":
     test_suite = unittest.TestSuite()
 
     # add testsuites
-    # TestXFTranscriptor.appid = args.xunfei_appid
-    # TestXFTranscriptor.apikey = args.xunfei_apikey
-    # TestXFTranscriptor.apisecret = args.xunfei_apisecret
-    # test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestXFTranscriptor))
-    # test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestPrerecorded))
-    # test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestLiveStream))
-    # test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestOpenai))
-    # test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestRecord))
+    TestXFTranscriptor.appid = args.xunfei_appid
+    TestXFTranscriptor.apikey = args.xunfei_apikey
+    TestXFTranscriptor.apisecret = args.xunfei_apisecret
+    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestXFTranscriptor))
+    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestPrerecorded))
+    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestLiveStream))
+    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestOpenai))
+    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestRecord))
 
     # add integration test
     TranslatorTest.appid = args.xunfei_appid
@@ -40,7 +40,9 @@ if __name__== "__main__":
     
 
     # run all tests and generate coverage report
-    cov = coverage.Coverage()
+    cov = coverage.Coverage(include=['../aws_streaming_transcription/*', '../openai_translation/*', 
+                                     '../xunfei_speed_transcription/*', '../game_translator.py', '../audio/record.py'], 
+                            omit=['../test/*'])
     cov.start()
 
     runner = unittest.TextTestRunner(verbosity=2)
@@ -48,3 +50,7 @@ if __name__== "__main__":
 
     cov.stop()
     cov.report()
+    cov.html_report(directory='covhtml')
+
+
+# should comment the argparser and the main part in game_translator.py to run this script

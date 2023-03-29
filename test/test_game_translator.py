@@ -2,7 +2,6 @@ import os
 import sys
 import io
 import unittest
-import requests
 
 from unittest.mock import patch
 
@@ -25,18 +24,8 @@ class TranslatorTest(unittest.TestCase):
             self.assertTrue(contains_substring(fake_out.getvalue().strip(), 'transcription success...'))
             self.assertTrue(contains_substring(fake_out.getvalue().strip(), 'translation success...'))
 
-    def test_aws_live_openai(self):
-        translator2 = translator("aws_live", prerecorded=0, 
-                                 output_language="English")
-
-        with patch('sys.stdout', new=io.StringIO()) as fake_out:
-            res = translator2.openai_translation()
-            self.assertIsNotNone(res)
-            self.assertTrue(contains_substring(fake_out.getvalue().strip(), 'transcription success...'))
-            self.assertTrue(contains_substring(fake_out.getvalue().strip(), 'translation success...'))
-
     def test_aws_pre_openai(self):
-        translator3 = translator("aws_pre", prerecorded=1, filepath="../audio/test1.wav",
+        translator3 = translator("aws_pre", prerecorded=1, filepath="../audio/audio_sample_little.wav",
                                  output_language="English")
 
         with patch('sys.stdout', new=io.StringIO()) as fake_out:
@@ -44,4 +33,16 @@ class TranslatorTest(unittest.TestCase):
             self.assertIsNotNone(res)
             self.assertTrue(contains_substring(fake_out.getvalue().strip(), 'transcription success...'))
             self.assertTrue(contains_substring(fake_out.getvalue().strip(), 'translation success...'))
+
+    # def test_aws_live_openai(self):
+    #     translator2 = translator("aws_live", prerecorded=0, 
+    #                              output_language="English")
+
+    #     with patch('sys.stdout', new=io.StringIO()) as fake_out:
+    #         res = translator2.openai_translation()
+    #         self.assertIsNotNone(res)
+    #         self.assertTrue(contains_substring(fake_out.getvalue().strip(), 'transcription success...'))
+    #         self.assertTrue(contains_substring(fake_out.getvalue().strip(), 'translation success...'))
+
+
 

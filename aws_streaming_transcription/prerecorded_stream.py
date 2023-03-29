@@ -95,7 +95,7 @@ async def basic_transcribe(audio_path : str):
     await asyncio.gather(write_chunks(), handler.handle_events())
 
     s = select_result(handler.all_results)
-    print("transcription success···")
+    print("transcription success...")
     print(s)
 
     return s
