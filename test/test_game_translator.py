@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 sys.path.append(os.path.abspath("../"))
 
-from game_translator import translator
+from game_translator import gameTranslator
 
 
 def contains_substring(string, substring):
@@ -16,7 +16,7 @@ def contains_substring(string, substring):
 
 class TranslatorTest(unittest.TestCase):
     def test_xunfei_openai(self):
-        translator1 = translator(
+        translator1 = gameTranslator(
             "xunfei",
             filepath="../audio/audio_sample_little.wav",
             xunfei_appid=self.appid,
@@ -41,7 +41,7 @@ class TranslatorTest(unittest.TestCase):
             )
 
     def test_aws_pre_openai(self):
-        translator3 = translator(
+        translator3 = gameTranslator(
             "aws_pre",
             prerecorded=1,
             filepath="../audio/audio_sample_little.wav",

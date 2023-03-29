@@ -10,33 +10,33 @@ from test_openai import TestOpenai
 from test_record import TestRecord
 from test_game_translator import TranslatorTest
 
-parser = argparse.ArgumentParser(description="Description of your program")
-parser.add_argument(
+parser_test = argparse.ArgumentParser(description="Description of your program")
+parser_test.add_argument(
     "--xunfei_appid", required=True, type=str, help="xunfei transcription appid"
 )
-parser.add_argument(
+parser_test.add_argument(
     "--xunfei_apikey", required=True, type=str, help="xunfei transcription apikey"
 )
-parser.add_argument(
+parser_test.add_argument(
     "--xunfei_apisecret",
     required=True,
     type=str,
     help="xunfei transccription api secret",
 )
-parser.add_argument(
+parser_test.add_argument(
     "--openai_key", required=True, type=str, help="open ai translatio api key"
 )
-args = parser.parse_args()
-openai.api_key = args.openai_key
+args_test = parser_test.parse_args()
+openai.api_key = args_test.openai_key
 
 if __name__ == "__main__":
     # define overall testsuite
     test_suite = unittest.TestSuite()
 
     # add testsuites
-    TestXFTranscriptor.appid = args.xunfei_appid
-    TestXFTranscriptor.apikey = args.xunfei_apikey
-    TestXFTranscriptor.apisecret = args.xunfei_apisecret
+    TestXFTranscriptor.appid = args_test.xunfei_appid
+    TestXFTranscriptor.apikey = args_test.xunfei_apikey
+    TestXFTranscriptor.apisecret = args_test.xunfei_apisecret
     test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestXFTranscriptor))
     test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestPrerecorded))
     test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestLiveStream))
@@ -44,9 +44,9 @@ if __name__ == "__main__":
     test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestRecord))
 
     # add integration test
-    TranslatorTest.appid = args.xunfei_appid
-    TranslatorTest.apikey = args.xunfei_apikey
-    TranslatorTest.apisecret = args.xunfei_apisecret
+    TranslatorTest.appid = args_test.xunfei_appid
+    TranslatorTest.apikey = args_test.xunfei_apikey
+    TranslatorTest.apisecret = args_test.xunfei_apisecret
     test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TranslatorTest))
 
     # run all tests and generate coverage report
@@ -67,7 +67,7 @@ if __name__ == "__main__":
 
     cov.stop()
     cov.report()
-    cov.html_report(directory="covhtml")
+    # cov.html_report(directory="covhtml")
 
 
 # should comment the argparser and the main part in game_translator.py to run this script

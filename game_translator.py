@@ -19,42 +19,6 @@ from audio.record import Detector
 from aws_streaming_transcription import live_stream
 from aws_streaming_transcription import prerecorded_stream
 
-parser = argparse.ArgumentParser(description="Description of your program")
-parser.add_argument(
-    "--file", type=str, default="./audio/test.wav", help="prerecorded file path"
-)
-parser.add_argument("--xunfei_appid", type=str, help="xunfei transcription appid")
-parser.add_argument("--xunfei_apikey", type=str, help="xunfei transcription apikey")
-parser.add_argument(
-    "--xunfei_apisecret", type=str, help="xunfei transccription api secret"
-)
-parser.add_argument(
-    "--openai_key", required=True, type=str, help="open ai translatio api key"
-)
-parser.add_argument(
-    "-t",
-    "--transcription_model",
-    required=True,
-    type=str,
-    choices=["xunfei", "aws_pre", "aws_live"],
-    help="xunfei and aws_pre need prerecorded audios, aws_live not",
-)
-parser.add_argument(
-    "-o", "--output_language", required=True, type=str, help="output text's language"
-)
-parser.add_argument(
-    "--pre_recorded",
-    required=True,
-    type=int,
-    choices=[0, 1],
-    default=0,
-    help="when select 1, use audio that already exist",
-)
-
-args = parser.parse_args()
-openai.api_key = args.openai_key
-
-
 class gameTranslator:
     """
     A class representing a translator.
@@ -149,6 +113,42 @@ class gameTranslator:
 
 
 if __name__ == "__main__":
+    
+    parser = argparse.ArgumentParser(description="Description of your program")
+    parser.add_argument(
+        "--file", type=str, default="./audio/test.wav", help="prerecorded file path"
+    )
+    parser.add_argument("--xunfei_appid", type=str, help="xunfei transcription appid")
+    parser.add_argument("--xunfei_apikey", type=str, help="xunfei transcription apikey")
+    parser.add_argument(
+        "--xunfei_apisecret", type=str, help="xunfei transccription api secret"
+    )
+    parser.add_argument(
+        "--openai_key", required=True, type=str, help="open ai translatio api key"
+    )
+    parser.add_argument(
+        "-t",
+        "--transcription_model",
+        required=True,
+        type=str,
+        choices=["xunfei", "aws_pre", "aws_live"],
+        help="xunfei and aws_pre need prerecorded audios, aws_live not",
+    )
+    parser.add_argument(
+        "-o", "--output_language", required=True, type=str, help="output text's language"
+    )
+    parser.add_argument(
+        "--pre_recorded",
+        required=True,
+        type=int,
+        choices=[0, 1],
+        default=0,
+        help="when select 1, use audio that already exist",
+    )
+
+    args = parser.parse_args()
+    openai.api_key = args.openai_key
+
     new_translator = gameTranslator(
         args.transcription_model,
         filepath=args.file,
