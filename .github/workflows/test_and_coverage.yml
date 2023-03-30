@@ -34,6 +34,11 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+    - name: Install Coverage
+      run: |
+        pip install coverage
+        pip install coverage-badge
+
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -41,7 +46,7 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-2
 
-    - name: Test
+    - name: Test and create badge
       env:
         xunfei_appid: ${{ secrets.XUNFEI_APPID }}
         xunfei_apikey: ${{ secrets.XUNFEI_apikey }}
@@ -49,7 +54,5 @@ jobs:
         openai_key: ${{ secrets.OPENAI_KEY  }}
       run: |
         cd test
-        python test_all.py --xunfei_appid xunfei_appid --xunfei_apikey  xunfei_apikey --xunfei_apisecret xunfei_apisecret --openai_key openai_key 
-
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v3
+        coverage run --rcfile=.coveragerc test_all.py --xunfei_appid xunfei_appid --xunfei_apikey  xunfei_apikey --xunfei_apisecret xunfei_apisecret --openai_key openai_key 
+        coverage-badge -o coverage.svg -f

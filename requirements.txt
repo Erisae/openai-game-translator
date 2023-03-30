@@ -1,6 +1,5 @@
 aiofile==3.8.5
 amazon_transcribe==0.6.1
-coverage==7.2.2
 numpy==1.21.5
 openai==0.27.2
 pyaudio==0.2.13
