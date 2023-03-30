@@ -10,8 +10,6 @@ jobs:
         python-version: ["3.9"]
     steps:
     - uses: actions/checkout@v3
-      # with:
-      #   path: openai-game-translator
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
@@ -33,7 +31,7 @@ jobs:
         pip install pylint
 
     - name: Analysing the code with pylint
-      # working-directory: openai-game-translator
       run: |
-        pylint --init-hook 'import sys; sys.path.append("../../");' \
-               $(git ls-files '*.py')
+        pylint --rcfile=.pylintrc $(git ls-files '*.py')
+      # env:
+      #   PYTHONPATH: ${{ github.workspace }}/my_project
