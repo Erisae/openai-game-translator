@@ -1,5 +1,4 @@
 import unittest
-import coverage
 import argparse
 import openai
 
@@ -50,23 +49,23 @@ if __name__ == "__main__":
     test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TranslatorTest))
 
     # run all tests and generate coverage report
-    cov = coverage.Coverage(
-        include=[
-            "../aws_streaming_transcription/*",
-            "../openai_translation/*",
-            "../xunfei_speed_transcription/*",
-            "../game_translator.py",
-            "../audio/record.py",
-        ],
-        omit=["../test/*"],
-    )
-    cov.start()
+    # cov = coverage.Coverage(
+    #     include=[
+    #         "../aws_streaming_transcription/*",
+    #         "../openai_translation/*",
+    #         "../xunfei_speed_transcription/*",
+    #         "../game_translator.py",
+    #         "../audio/record.py",
+    #     ],
+    #     omit=["../test/*"],
+    # )
+    # cov.start()
 
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(test_suite)
 
-    cov.stop()
-    cov.report()
+    # cov.stop()
+    # cov.report()
     # cov.html_report(directory="covhtml")
 
 
