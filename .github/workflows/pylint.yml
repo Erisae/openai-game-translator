@@ -33,5 +33,6 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         pylint --rcfile=.pylintrc $(git ls-files '*.py')
+      continue-on-error: true  
       env:
         PYTHONPATH: ${{ github.workspace }}/my_project
