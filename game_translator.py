@@ -19,6 +19,7 @@ from audio.record import Detector
 from aws_streaming_transcription import live_stream
 from aws_streaming_transcription import prerecorded_stream
 
+
 class gameTranslator:
     """
     A class representing a translator.
@@ -113,7 +114,7 @@ class gameTranslator:
 
 
 if __name__ == "__main__":
-    
+
     parser = argparse.ArgumentParser(description="Description of your program")
     parser.add_argument(
         "--file", type=str, default="./audio/test.wav", help="prerecorded file path"
@@ -135,7 +136,11 @@ if __name__ == "__main__":
         help="xunfei and aws_pre need prerecorded audios, aws_live not",
     )
     parser.add_argument(
-        "-o", "--output_language", required=True, type=str, help="output text's language"
+        "-o",
+        "--output_language",
+        required=True,
+        type=str,
+        help="output text's language",
     )
     parser.add_argument(
         "--pre_recorded",
