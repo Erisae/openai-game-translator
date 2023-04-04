@@ -18,7 +18,7 @@ import os
 import re
 import requests
 
-from xunfei_speed_transcription import seve_file
+from .seve_file import SeveFile
 
 
 # create and query
@@ -213,7 +213,7 @@ class xf_transcriptor:
 
         """
         # file upload
-        api = seve_file.SeveFile(
+        api = SeveFile(
             app_id=self.APPID,
             api_key=self.UserName,
             api_secret=self.Secret,

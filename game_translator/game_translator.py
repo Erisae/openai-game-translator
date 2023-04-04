@@ -13,11 +13,11 @@ import asyncio
 import argparse
 import openai
 
-from xunfei_speed_transcription.ost_fast import xf_transcriptor
-from openai_translation.chat import translate_sentence
-from audio.record import Detector
-from aws_streaming_transcription import live_stream
-from aws_streaming_transcription import prerecorded_stream
+from .xunfei_speed_transcription.ost_fast import xf_transcriptor
+from .openai_translation.chat import translate_sentence
+from .audio.record import Detector
+from .aws_streaming_transcription import live_stream
+from .aws_streaming_transcription import prerecorded_stream
 
 
 class gameTranslator:
@@ -111,10 +111,8 @@ class gameTranslator:
 
         res = translate_sentence(text, self.target_language)
         return res
-
-
-if __name__ == "__main__":
-
+    
+def main():
     parser = argparse.ArgumentParser(description="Description of your program")
     parser.add_argument(
         "--file", type=str, default="./audio/test.wav", help="prerecorded file path"
@@ -164,6 +162,12 @@ if __name__ == "__main__":
         output_language=args.output_language,
     )
     new_translator.openai_translation()
+
+
+if __name__ == "__main__":
+    main()
+
+
 
 
 # todo: language change

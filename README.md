@@ -10,3 +10,11 @@ ChatGPT API based video game audio translator application and web service
 ## Overview
 A game translation app that uses the ChatGPT API to recognize in-game speech (and even game visuals) and provide smooth text translations on platforms like Switch and PS5, thanks to the powerful language abilities of GPT.
 
+## Installation
+```shell
+pip install requirements.txt
+```
+
+## Quick Start
+
+
