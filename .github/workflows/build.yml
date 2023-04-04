@@ -57,4 +57,8 @@ jobs:
         coverage run --rcfile=.coveragerc test_all.py --xunfei_appid xunfei_appid --xunfei_apikey  xunfei_apikey --xunfei_apisecret xunfei_apisecret --openai_key openai_key 
         
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+      run: |
+        cd test
+        curl -Os https://uploader.codecov.io/latest/linux/codecov
+        chmod +x codecov
+        ./codecov -t ${ secrets.CODECOV_TOKEN }
