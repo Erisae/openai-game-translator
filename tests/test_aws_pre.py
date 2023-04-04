@@ -4,11 +4,9 @@ import os
 import sys
 import io
 import numpy as np
-
 sys.path.append(os.path.abspath("../"))
-
 from unittest.mock import patch
-from aws_streaming_transcription.prerecorded_stream import (
+from game_translator.aws_streaming_transcription.prerecorded_stream import (
     basic_transcribe,
     select_result,
 )
@@ -20,7 +18,7 @@ def contains_substring(string, substring):
 
 class TestPrerecorded(unittest.TestCase):
     def setUp(self):
-        self.filepath = "../audio/audio_sample_little.wav"
+        self.filepath = "../game_translator/audio/audio_sample_little.wav"
 
     def test_transcription(self):
         # Set up mock audio data

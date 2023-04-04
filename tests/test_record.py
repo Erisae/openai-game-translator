@@ -2,11 +2,9 @@ import unittest
 import os
 import sys
 import io
-
 sys.path.append(os.path.abspath("../"))
-
 from unittest.mock import patch
-from audio.record import Detector
+from game_translator.audio.record import Detector
 
 
 def contains_substring(string, substring):
@@ -15,7 +13,7 @@ def contains_substring(string, substring):
 
 class TestRecord(unittest.TestCase):
     def setUp(self):
-        self.filepath = "../audio/test.wav"
+        self.filepath = "../game_translator/audio/test.wav"
         self.detector = Detector(recording_file=self.filepath)
 
     def test_detect_audio(self):

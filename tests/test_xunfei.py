@@ -2,11 +2,9 @@ import unittest
 import io
 import sys
 import os
-
 sys.path.append(os.path.abspath("../"))
-
 from unittest.mock import patch
-from xunfei_speed_transcription.ost_fast import xf_transcriptor
+from game_translator.xunfei_speed_transcription.ost_fast import xf_transcriptor
 
 
 def contains_substring(string, substring):
@@ -15,7 +13,7 @@ def contains_substring(string, substring):
 
 class TestXFTranscriptor(unittest.TestCase):
     def setUp(self):  #
-        self.file_path = "../audio/audio_sample_little.wav"
+        self.file_path = "../game_translator/audio/audio_sample_little.wav"
         self.transcriptor = xf_transcriptor(
             self.appid, self.apikey, self.apisecret, self.file_path
         )

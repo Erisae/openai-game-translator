@@ -46,7 +46,7 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-2
 
-    - name: Test and create badge
+    - name: Test
       env:
         xunfei_appid: ${{ secrets.XUNFEI_APPID }}
         xunfei_apikey: ${{ secrets.XUNFEI_apikey }}
@@ -55,4 +55,6 @@ jobs:
       run: |
         cd test
         coverage run --rcfile=.coveragerc test_all.py --xunfei_appid xunfei_appid --xunfei_apikey  xunfei_apikey --xunfei_apisecret xunfei_apisecret --openai_key openai_key 
-        coverage-badge -o coverage.svg -f
+        
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3

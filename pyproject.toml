@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "openai-game-translator_yuhanxia"
+name = "openai-game-translator"
 version = "0.0.5"
 authors = [
   { name="Yuhan Xia", email="yx2729@columbia.edu" },

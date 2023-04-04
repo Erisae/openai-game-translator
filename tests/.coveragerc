@@ -1,8 +1,8 @@
 [run]
 omit = ../test/*
 include = 
-    ../aws_streaming_transcription/*
-    ../openai_translation/*
-    ../xunfei_speed_transcription/*
-    ./game_translator.py
-    ../audio/record.py
+    ../game_translator/aws_streaming_transcription/*
+    ../game_translator/openai_translation/*
+    ../game_translator/xunfei_speed_transcription/*
+    ../game_translator/game_translator.py
+    ../game_translator/audio/record.py

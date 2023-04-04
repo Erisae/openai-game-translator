@@ -6,9 +6,8 @@ import io
 import numpy as np
 
 sys.path.append(os.path.abspath("../"))
-
 from unittest.mock import patch
-from aws_streaming_transcription.live_stream import basic_transcribe, select_result
+from game_translator.aws_streaming_transcription.live_stream import basic_transcribe, select_result
 
 
 class TestLiveStream(unittest.TestCase):

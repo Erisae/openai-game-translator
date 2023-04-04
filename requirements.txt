@@ -1,8 +1,0 @@
-aiofile==3.8.5
-amazon_transcribe==0.6.1
-numpy==1.21.5
-openai==0.27.2
-pyaudio==0.2.13
-requests==2.27.1
-sounddevice==0.4.6
-urllib3==1.26.9
