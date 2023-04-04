@@ -52,12 +52,13 @@ jobs:
         xunfei_apisecret: ${{ secrets.XUNFEI_APISECRET }}
         openai_key: ${{ secrets.OPENAI_KEY  }}
       run: |
-        cd tests
+        cd game_translator/tests
         coverage run --rcfile=.coveragerc test_all.py --xunfei_appid xunfei_appid --xunfei_apikey  xunfei_apikey --xunfei_apisecret xunfei_apisecret --openai_key openai_key 
+        coverage xml -o coverage.xml
         
     - name: Upload coverage to Codecov
       run: |
-        cd tests
+        cd game_translator/tests
         curl -Os https://uploader.codecov.io/latest/linux/codecov
         chmod +x codecov
         ./codecov -t ${{ secrets.CODECOV_TOKEN }}

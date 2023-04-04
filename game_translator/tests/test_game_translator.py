@@ -16,7 +16,7 @@ class TranslatorTest(unittest.TestCase):
     def test_xunfei_openai(self):
         translator1 = gameTranslator(
             "xunfei",
-            filepath="../game_translator/audio/audio_sample_little.wav",
+            filepath="../audio/audio_sample_little.wav",
             xunfei_appid=self.appid,
             xunfei_apikey=self.apikey,
             xunfei_apisecret=self.apisecret,
@@ -42,7 +42,7 @@ class TranslatorTest(unittest.TestCase):
         translator3 = gameTranslator(
             "aws_pre",
             prerecorded=1,
-            filepath="../game_translator/audio/audio_sample_little.wav",
+            filepath="../audio/audio_sample_little.wav",
             output_language="English",
         )
 

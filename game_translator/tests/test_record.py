@@ -13,7 +13,7 @@ def contains_substring(string, substring):
 
 class TestRecord(unittest.TestCase):
     def setUp(self):
-        self.filepath = "../game_translator/audio/test.wav"
+        self.filepath = "../audio/test.wav"
         self.detector = Detector(recording_file=self.filepath)
 
     def test_detect_audio(self):
