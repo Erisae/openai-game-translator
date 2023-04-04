@@ -1,0 +1,8 @@
+[run]
+omit = ../test/*
+include = 
+    ../game_translator/aws_streaming_transcription/*
+    ../game_translator/openai_translation/*
+    ../game_translator/xunfei_speed_transcription/*
+    ../game_translator/game_translator.py
+    ../game_translator/audio/record.py

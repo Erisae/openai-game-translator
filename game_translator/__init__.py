@@ -1,0 +1,1 @@
+from .game_translator import gameTranslator, main 

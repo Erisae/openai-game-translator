@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openai-game-translator"
+version = "0.0.5"
+authors = [
+  { name="Yuhan Xia", email="yx2729@columbia.edu" },
+]
+description = "an openai based game audio translator"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Erisae/openai-game-translator"

@@ -48,25 +48,5 @@ if __name__ == "__main__":
     TranslatorTest.apisecret = args_test.xunfei_apisecret
     test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TranslatorTest))
 
-    # run all tests and generate coverage report
-    # cov = coverage.Coverage(
-    #     include=[
-    #         "../aws_streaming_transcription/*",
-    #         "../openai_translation/*",
-    #         "../xunfei_speed_transcription/*",
-    #         "../game_translator.py",
-    #         "../audio/record.py",
-    #     ],
-    #     omit=["../test/*"],
-    # )
-    # cov.start()
-
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(test_suite)
-
-    # cov.stop()
-    # cov.report()
-    # cov.html_report(directory="covhtml")
-
-
-# should comment the argparser and the main part in game_translator.py to run this script
