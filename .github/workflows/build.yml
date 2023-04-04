@@ -21,7 +21,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Set up Python 3.9
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
         python-version: "3.9"
         
@@ -32,12 +32,11 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        make dependencies
 
     - name: Install Coverage
       run: |
         pip install coverage
-        pip install coverage-badge
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v2
@@ -53,12 +52,12 @@ jobs:
         xunfei_apisecret: ${{ secrets.XUNFEI_APISECRET }}
         openai_key: ${{ secrets.OPENAI_KEY  }}
       run: |
-        cd test
+        cd tests
         coverage run --rcfile=.coveragerc test_all.py --xunfei_appid xunfei_appid --xunfei_apikey  xunfei_apikey --xunfei_apisecret xunfei_apisecret --openai_key openai_key 
         
     - name: Upload coverage to Codecov
       run: |
-        cd test
+        cd tests
         curl -Os https://uploader.codecov.io/latest/linux/codecov
         chmod +x codecov
         ./codecov -t ${ secrets.CODECOV_TOKEN }
