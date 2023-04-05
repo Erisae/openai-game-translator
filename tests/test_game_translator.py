@@ -5,7 +5,7 @@ import unittest
 
 from unittest.mock import patch
 sys.path.append(os.path.abspath("../"))
-from game_translator import gameTranslator
+from game_translator.game_translator import gameTranslator
 
 
 def contains_substring(string, substring):
