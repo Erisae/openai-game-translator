@@ -4,7 +4,7 @@ import sys
 import io
 sys.path.append(os.path.abspath("../"))
 from unittest.mock import patch
-from openai_translation.chat import translate_sentence
+from game_translator.openai_translation.chat import translate_sentence
 
 
 def contains_substring(string, substring):

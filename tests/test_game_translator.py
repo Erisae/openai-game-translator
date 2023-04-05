@@ -5,7 +5,7 @@ import unittest
 
 from unittest.mock import patch
 sys.path.append(os.path.abspath("../"))
-from game_translator import gameTranslator
+from game_translator.game_translator import gameTranslator
 
 
 def contains_substring(string, substring):
@@ -16,7 +16,7 @@ class TranslatorTest(unittest.TestCase):
     def test_xunfei_openai(self):
         translator1 = gameTranslator(
             "xunfei",
-            filepath="../audio/audio_sample_little.wav",
+            filepath="../game_translator/audio/audio_sample_little.wav",
             xunfei_appid=self.appid,
             xunfei_apikey=self.apikey,
             xunfei_apisecret=self.apisecret,
@@ -42,7 +42,7 @@ class TranslatorTest(unittest.TestCase):
         translator3 = gameTranslator(
             "aws_pre",
             prerecorded=1,
-            filepath="../audio/audio_sample_little.wav",
+            filepath="../game_translator/audio/audio_sample_little.wav",
             output_language="English",
         )
 

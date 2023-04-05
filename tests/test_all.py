@@ -9,27 +9,26 @@ from test_openai import TestOpenai
 from test_record import TestRecord
 from test_game_translator import TranslatorTest
 
-parser_test = argparse.ArgumentParser(description="Description of your program")
-parser_test.add_argument(
-    "--xunfei_appid", required=True, type=str, help="xunfei transcription appid"
-)
-parser_test.add_argument(
-    "--xunfei_apikey", required=True, type=str, help="xunfei transcription apikey"
-)
-parser_test.add_argument(
-    "--xunfei_apisecret",
-    required=True,
-    type=str,
-    help="xunfei transccription api secret",
-)
-parser_test.add_argument(
-    "--openai_key", required=True, type=str, help="open ai translatio api key"
-)
-args_test = parser_test.parse_args()
-openai.api_key = args_test.openai_key
-
-if __name__ == "__main__":
-    # define overall testsuite
+def main():
+    parser_test = argparse.ArgumentParser(description="Description of your program")
+    parser_test.add_argument(
+        "--xunfei_appid", required=True, type=str, help="xunfei transcription appid"
+    )
+    parser_test.add_argument(
+        "--xunfei_apikey", required=True, type=str, help="xunfei transcription apikey"
+    )
+    parser_test.add_argument(
+        "--xunfei_apisecret",
+        required=True,
+        type=str,
+        help="xunfei transccription api secret",
+    )
+    parser_test.add_argument(
+        "--openai_key", required=True, type=str, help="open ai translatio api key"
+    )
+    args_test = parser_test.parse_args()
+    openai.api_key = args_test.openai_key
+     # define overall testsuite
     test_suite = unittest.TestSuite()
 
     # add testsuites
@@ -50,3 +49,6 @@ if __name__ == "__main__":
 
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(test_suite)
+
+if __name__ == "__main__":
+   main()
