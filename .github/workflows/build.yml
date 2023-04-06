@@ -17,15 +17,15 @@ jobs:
     strategy:
       matrix:
         python-version: [3.9]
-        os: [ubuntu-latest, macos-latest]
+        os: [macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout repository 
       uses: actions/checkout@v3
 
-    - name: Print OS version
-      run: |
-        echo "Running on ${{ matrix.os }}"
+    # - name: Print OS version
+    #   run: |
+    #     echo "Running on ${{ matrix.os }}"
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
@@ -34,10 +34,10 @@ jobs:
         cache: "pip"
         cache-dependency-path: 'pyproject.toml'
         
-    - name: set up portaudio [ubuntu]
-      if: ${{ matrix.os == 'ubuntu-latest'}}
-      run: |
-        sudo apt install portaudio19-dev
+    # - name: set up portaudio [ubuntu]
+    #   if: ${{ matrix.os == 'ubuntu-latest'}}
+    #   run: |
+    #     sudo apt install portaudio19-dev
       
     - name: set up portaudio [macos]
       if: ${{ matrix.os == 'macos-latest'}}
