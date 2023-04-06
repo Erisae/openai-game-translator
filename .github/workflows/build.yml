@@ -33,7 +33,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
         
     - name: set up portaudio
-      if: ${{ matrix.os == ubuntu-latest}}
+      if: ${{ matrix.os == 'ubuntu-latest'}}
       run: |
         sudo apt install portaudio19-dev
 
