@@ -11,11 +11,16 @@ develop:  ## install dependencies
 	python -m pip install sounddevice
 	python -m pip install urllib3
 
-test-dev:
+test-dev: ## install assessment libraries
 	python -m pip install coverage
 	python -m pip install black
 	python -m pip install flake8
 
+build: ## build libary
+	python -m build
+
+install:  ## install library
+	python -m pip install .
 #########
 # TESTS #
 #########
@@ -46,6 +51,6 @@ format:  ## run autoformatting with black
 #########
 clean: ## clean the repository
 	rm -rf tests/.coverage tests/coverage.xml
-	rm -rf dist *.egg-info
+	rm -rf dist *.egg-info build
 
 
