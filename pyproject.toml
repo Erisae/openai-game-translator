@@ -44,5 +44,8 @@ file = "LICENSE"
 [project.urls]
 repository = "https://github.com/Erisae/openai-game-translator"
 
+[project.scripts]
+translate = "game_translator.game_translator:main"
+
 [options.system_packages]
 portaudio = "19.7.0"

@@ -73,9 +73,17 @@ jobs:
       run: |
         make coverage xunfei_appid=xunfei_appid xunfei_apikey=xunfei_apikey xunfei_apisecret=xunfei_apisecret openai_key=openai_key
         
-    - name: Upload coverage to Codecov
+    # - name: Upload coverage to Codecov [linux]
+    #   run: |
+    #     cd tests
+    #     curl -Os https://uploader.codecov.io/latest/linux/codecov
+    #     chmod +x codecov
+    #     ./codecov -t ${{ secrets.CODECOV_TOKEN }}
+    
+    - name: Upload coverage to Codecov [macos]
+      if: ${{ matrix.os == 'macos-latest'}}
       run: |
         cd tests
-        curl -Os https://uploader.codecov.io/latest/linux/codecov
+        curl -Os https://uploader.codecov.io/latest/macos/codecov
         chmod +x codecov
         ./codecov -t ${{ secrets.CODECOV_TOKEN }}

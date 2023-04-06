@@ -10,6 +10,9 @@ build: ## build libary and place bin in ./build
 install:  ## install library
 	python -m pip install .
 
+uninstall:
+	pip uninstall openai-game-translator
+
 ########
 # DIST #
 ########

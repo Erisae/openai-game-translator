@@ -158,7 +158,8 @@ def main():
         prerecorded=args.pre_recorded,
         output_language=args.output_language,
     )
-    new_translator.openai_translation()
+    result = new_translator.openai_translation()
+    print(result)
 
 
 if __name__ == "__main__":
