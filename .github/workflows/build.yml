@@ -36,6 +36,9 @@ jobs:
       if: ${{ matrix.os == 'ubuntu-latest'}}
       run: |
         sudo apt install portaudio19-dev
+      if: ${{ matrix.os == 'macos-latest'}}
+      run: |
+        brew install portaudio
 
     - name: Install dependencies
       run: |

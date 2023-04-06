@@ -1,12 +1,17 @@
 # Contributing to openai-game-translator
 
 ## Get Started
-1. required python version: 3.7, 3.8, 3.9, 3.10
+1. required python version: 3.9, 3.10
 2. clone openai-game-translator from git
 ```shell
 git clone https://github.com/Erisae/openai-game-translator.git
 ```
-3. install development dependencies
+1. ensure that you have portaudio
+```shell
+sudo apt install portaudio19-dev # linux
+brew install portaudio # macos
+```
+1. install development dependencies
 ```shell
 make develop
 ```
