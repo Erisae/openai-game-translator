@@ -10,12 +10,36 @@ authors = [
 ]
 description = "an openai based game audio translator"
 readme = "README.md"
+requires-python = ">=3.9, <3.11"
 classifiers = [
+    "Programming Language :: Python :: Implementation :: PyPy",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
 ]
+dependencies = [
+    "aiofile==3.8.5",
+    "amazon-transcribe==0.6.1",
+    "numpy==1.24.2",
+    "openai==0.27.2",
+    "pyaudio==0.2.13",
+    "requests==2.27.1",
+    "sounddevice==0.4.6",
+    "urllib3==1.26.15"
+]
+
+[project.optional-dependencies]
+develop = [
+    "coverage==7.2.2",
+    "black==23.3.0",
+    "flake8==6.0.0",
+    "build==0.10.0",
+    "twine==4.0.2"
+]
+
+[project.license]
+file = "LICENSE"
 
 [project.urls]
-"Homepage" = "https://github.com/Erisae/openai-game-translator"
+repository = "https://github.com/Erisae/openai-game-translator"
