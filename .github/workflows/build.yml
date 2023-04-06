@@ -31,6 +31,8 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
+        cache: "pip"
+        cache-dependency-path: 'pyproject.toml'
         
     - name: set up portaudio [ubuntu]
       if: ${{ matrix.os == 'ubuntu-latest'}}
