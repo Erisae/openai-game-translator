@@ -5,11 +5,6 @@ import audioop
 import wave
 import pyaudio
 
-# streaming settings
-stream_format = pyaudio.paInt16
-pyaudio_instance = pyaudio.PyAudio()
-sample_width = pyaudio_instance.get_sample_size(stream_format)
-
 
 class Detector:
     """
@@ -27,6 +22,8 @@ class Detector:
         max_low_audio_flag=100,
         recording=True,
         recording_file="test.wav",
+        stream_format=pyaudio.paInt16,
+        pyaudio_instance=pyaudio.PyAudio()
     ):
         self.channels = channels
         self.rate = rate
@@ -36,6 +33,9 @@ class Detector:
         self.recording = recording
         self.recording_file = recording_file
         self.audio_frames = []
+        self.stream_format = stream_format
+        self.pyaudio_instance = pyaudio_instance
+        self.sample_width = self.pyaudio_instance.get_sample_size(stream_format)
 
     def detect_audio(self):
         """
@@ -44,9 +44,9 @@ class Detector:
         """
 
         print("start detecting audio ... ")
-
-        stream = pyaudio_instance.open(
-            format=stream_format,
+        # print(self.pyaudio_instance.open.read(1024))
+        stream = self.pyaudio_instance.open(
+            format=self.stream_format,
             channels=self.channels,
             rate=self.rate,
             input=True,
@@ -56,15 +56,14 @@ class Detector:
         detect_count = 0
         while True:
             detect_count += 1
-
             stream_data = stream.read(self.chunk)
-
             rms = audioop.rms(stream_data, 2)
-            # print(f"the {detect_count} time detecting：", rms)
+            # print(f"the {detect_count} time detecting: ", rms)
+
             if rms > self.audio_min_rms:
                 low_audio_flag = 0
             else:
-                low_audio_flag + 1
+                low_audio_flag += 1
 
             # 100 consecutive samples of low audio
             if low_audio_flag > self.max_low_audio_flag:
@@ -73,7 +72,7 @@ class Detector:
             self.audio_frames.append(stream_data)
         stream.stop_stream()
         stream.close()
-        pyaudio_instance.terminate()
+        self.pyaudio_instance.terminate()
         if self.recording:
             self.record()
         return self
@@ -86,7 +85,7 @@ class Detector:
 
         waveframe = wave.open(self.recording_file, "wb")
         waveframe.setnchannels(self.channels)
-        waveframe.setsampwidth(sample_width)
+        waveframe.setsampwidth(self.sample_width)
         waveframe.setframerate(self.rate)
         waveframe.writeframes(b"".join(self.audio_frames))
         waveframe.close()
