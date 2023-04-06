@@ -37,6 +37,10 @@ jobs:
     - name: Install testing packages
       run: |
         make test-dev
+
+    - name: Build
+      run: |
+        make build
       
     - name: Lint
       run: |
