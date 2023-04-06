@@ -61,8 +61,10 @@ class Detector:
 
             rms = audioop.rms(stream_data, 2)
             # print(f"the {detect_count} time detecting：", rms)
-
-            low_audio_flag = 0 if rms > self.audio_min_rms else low_audio_flag + 1
+            if rms > self.audio_min_rms:
+                low_audio_flag = 0
+            else:
+                low_audio_flag + 1
 
             # 100 consecutive samples of low audio
             if low_audio_flag > self.max_low_audio_flag:

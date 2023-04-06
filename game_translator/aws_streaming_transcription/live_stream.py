@@ -52,7 +52,9 @@ async def basic_transcribe(max_low_audio_flag=20, audio_min_rms=100):
     client = TranscribeStreamingClient(region="us-east-2")
 
     stream = await client.start_stream_transcription(
-        language_code="en-US", media_sample_rate_hz=16000, media_encoding="pcm",
+        language_code="en-US",
+        media_sample_rate_hz=16000,
+        media_encoding="pcm",
     )
 
     async def write_chunks():
@@ -71,7 +73,7 @@ async def basic_transcribe(max_low_audio_flag=20, audio_min_rms=100):
             if low_audio_flag > max_low_audio_flag:
                 break
 
-            # convert the audio frame to a byte stream and send it to the transcription service.
+            # convert the audio frame to byte stream and send it to service.
             await stream.input_stream.send_audio_event(audio_chunk=data.tobytes())
 
         await stream.input_stream.end_stream()

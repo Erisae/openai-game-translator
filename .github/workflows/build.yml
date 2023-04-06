@@ -32,11 +32,15 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        make dependencies
+        make develop
 
-    - name: Install Coverage
+    - name: Install testing packages
       run: |
-        pip install coverage
+        make test-dev
+      
+    - name: Lint
+      run: |
+        make lint
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v2
@@ -52,9 +56,7 @@ jobs:
         xunfei_apisecret: ${{ secrets.XUNFEI_APISECRET }}
         openai_key: ${{ secrets.OPENAI_KEY  }}
       run: |
-        cd tests
-        coverage run --rcfile=.coveragerc test_all.py --xunfei_appid xunfei_appid --xunfei_apikey  xunfei_apikey --xunfei_apisecret xunfei_apisecret --openai_key openai_key 
-        coverage xml -o coverage.xml
+        make coverage xunfei_appid=xunfei_appid xunfei_apikey=xunfei_apikey xunfei_apisecret=xunfei_apisecret openai_key=openai_key
         
     - name: Upload coverage to Codecov
       run: |

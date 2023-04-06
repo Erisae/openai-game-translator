@@ -111,20 +111,17 @@ class gameTranslator:
 
         res = translate_sentence(text, self.target_language)
         return res
-    
+
+
 def main():
     parser = argparse.ArgumentParser(description="Description of your program")
     parser.add_argument(
-        "--file", type=str, default="./audio/test.wav", help="prerecorded file path"
+        "--file", type=str, default="./audio/test.wav", help="file path"
     )
-    parser.add_argument("--xunfei_appid", type=str, help="xunfei transcription appid")
-    parser.add_argument("--xunfei_apikey", type=str, help="xunfei transcription apikey")
-    parser.add_argument(
-        "--xunfei_apisecret", type=str, help="xunfei transccription api secret"
-    )
-    parser.add_argument(
-        "--openai_key", required=True, type=str, help="open ai translatio api key"
-    )
+    parser.add_argument("--xunfei_appid", type=str, help="xunfei appid")
+    parser.add_argument("--xunfei_apikey", type=str, help="xunfei apikey")
+    parser.add_argument("--xunfei_apisecret", type=str, help="xunfei api secret")
+    parser.add_argument("--openai_key", required=True, type=str, help="openai api key")
     parser.add_argument(
         "-t",
         "--transcription_model",
@@ -166,8 +163,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
 
 
 # todo: language change
