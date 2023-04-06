@@ -23,7 +23,7 @@ class Detector:
         recording=True,
         recording_file="test.wav",
         stream_format=pyaudio.paInt16,
-        pyaudio_instance=pyaudio.PyAudio()
+        pyaudio_instance=pyaudio.PyAudio(),
     ):
         self.channels = channels
         self.rate = rate
