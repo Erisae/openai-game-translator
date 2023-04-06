@@ -26,4 +26,11 @@ translate --xunfei_appid <appid> --xunfei_apikey  <apikey> --xunfei_apisecret <a
 - `<use_prerecored>`: whether to use prerecorded audio, 0 no, 1 yes
 - `<audio_path>`: prerecorded or transcription related audio file path
 
+In script, use
+```python
+from game_translator import  gameTranslator
+translator = gameTranslator("aws_live")
+translator.openai_translate()
+```
+
 

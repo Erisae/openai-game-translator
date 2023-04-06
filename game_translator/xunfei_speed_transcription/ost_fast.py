@@ -161,7 +161,9 @@ class xf_transcriptor:
         """
         post_data = {
             "common": {"app_id": self.APPID},
-            "business": {"task_id": task_id,},
+            "business": {
+                "task_id": task_id,
+            },
         }
         body = json.dumps(post_data)
         return body

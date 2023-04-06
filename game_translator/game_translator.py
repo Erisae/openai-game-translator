@@ -111,7 +111,8 @@ class gameTranslator:
 
         res = translate_sentence(text, self.target_language)
         return res
-    
+
+
 def main():
     parser = argparse.ArgumentParser(description="Description of your program")
     parser.add_argument(
@@ -166,8 +167,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
 
 
 # todo: language change

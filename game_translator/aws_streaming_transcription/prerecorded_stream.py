@@ -76,7 +76,9 @@ async def basic_transcribe(audio_path: str):
 
     # Start transcription to generate our async stream
     stream = await client.start_stream_transcription(
-        language_code="en-US", media_sample_rate_hz=SAMPLE_RATE, media_encoding="pcm",
+        language_code="en-US",
+        media_sample_rate_hz=SAMPLE_RATE,
+        media_encoding="pcm",
     )
 
     async def write_chunks():

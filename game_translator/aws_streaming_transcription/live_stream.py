@@ -52,7 +52,9 @@ async def basic_transcribe(max_low_audio_flag=20, audio_min_rms=100):
     client = TranscribeStreamingClient(region="us-east-2")
 
     stream = await client.start_stream_transcription(
-        language_code="en-US", media_sample_rate_hz=16000, media_encoding="pcm",
+        language_code="en-US",
+        media_sample_rate_hz=16000,
+        media_encoding="pcm",
     )
 
     async def write_chunks():
