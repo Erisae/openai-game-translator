@@ -56,7 +56,6 @@ jobs:
         xunfei_apisecret: ${{ secrets.XUNFEI_APISECRET }}
         openai_key: ${{ secrets.OPENAI_KEY  }}
       run: |
-        cd tests
         make coverage xunfei_appid=xunfei_appid xunfei_apikey=xunfei_apikey xunfei_apisecret=xunfei_apisecret openai_key=openai_key
         
     - name: Upload coverage to Codecov
