@@ -15,6 +15,7 @@ test-dev: ## install assessment libraries
 	python -m pip install coverage
 	python -m pip install black
 	python -m pip install flake8
+	python -m pip install --upgrade build
 
 build: ## build libary
 	python -m build
