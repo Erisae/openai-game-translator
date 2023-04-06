@@ -73,7 +73,7 @@ async def basic_transcribe(max_low_audio_flag=20, audio_min_rms=100):
             if low_audio_flag > max_low_audio_flag:
                 break
 
-            # convert the audio frame to a byte stream and send it to the transcription service.
+            # convert the audio frame to byte stream and send it to service.
             await stream.input_stream.send_audio_event(audio_chunk=data.tobytes())
 
         await stream.input_stream.end_stream()

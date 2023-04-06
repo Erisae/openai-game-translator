@@ -1,6 +1,6 @@
-from .game_translator import *
-from .audio.record import *
-from .aws_streaming_transcription.live_stream import *
-from .aws_streaming_transcription.prerecorded_stream import *
-from .openai_translation.chat import *
-from .xunfei_speed_transcription import *
+from .game_translator import gameTranslator, main
+from .audio.record import Detector
+from .aws_streaming_transcription import live_stream
+from .aws_streaming_transcription import prerecorded_stream
+from .openai_translation import chat
+from .xunfei_speed_transcription import ost_fast, seve_file

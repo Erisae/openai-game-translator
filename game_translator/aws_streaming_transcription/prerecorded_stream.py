@@ -1,7 +1,7 @@
 # reference: https://github.com/awslabs/amazon-transcribe-streaming-sdk
 # document:  https://docs.aws.amazon.com/transcribe/latest/dg/streaming.html
 """
-default installation requires aws-crt~=0.14 but 0.14 can not be installed 
+default installation requires aws-crt~=0.14 but 0.14 can not be installed
     - install manually by cloning the sdk and change setup.py and setup.cfg 's awscrt requiremente to >= 0.14
     - 0.16 works
 """

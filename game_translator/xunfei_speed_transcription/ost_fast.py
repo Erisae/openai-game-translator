@@ -176,7 +176,6 @@ class xf_transcriptor:
         try:
             response = requests.post(url, data=body, headers=headers, timeout=8)
             status_code = response.status_code
-            interval = response.elapsed.total_seconds()
             if status_code != 200:
                 info = response.content
                 return info

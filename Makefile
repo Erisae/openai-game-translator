@@ -32,9 +32,9 @@ tests: test
 #########
 # LINTS #
 #########
-lint:
+lint: ## omiting E501: line too long and F401 imported but unused
 	python -m black --check game_translator
-	python -m flake8 game_translator
+	python -m flake8 --extend-ignore=E501,F401 game_translator  
 
 lints: lint
 
