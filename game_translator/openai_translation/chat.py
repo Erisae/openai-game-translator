@@ -24,4 +24,5 @@ def translate_sentence(content, language):
         model="gpt-3.5-turbo", messages=[{"role": "user", "content": prompt}]
     )
     print("translation success...")
+    print(completion.choices[0].message.content.lstrip()[1:])
     return completion.choices[0].message.content.lstrip()[1:]

@@ -65,13 +65,8 @@ jobs:
         aws-region: us-west-2
 
     - name: Test
-      env:
-        xunfei_appid: ${{ secrets.XUNFEI_APPID }}
-        xunfei_apikey: ${{ secrets.XUNFEI_apikey }}
-        xunfei_apisecret: ${{ secrets.XUNFEI_APISECRET }}
-        openai_key: ${{ secrets.OPENAI_KEY  }}
       run: |
-        make coverage xunfei_appid=xunfei_appid xunfei_apikey=xunfei_apikey xunfei_apisecret=xunfei_apisecret openai_key=openai_key
+        make coverage xunfei_appid=${{ secrets.XUNFEI_APPID }} xunfei_apikey=${{ secrets.XUNFEI_apikey }} xunfei_apisecret=${{ secrets.XUNFEI_APISECRET }} openai_key=${{ secrets.OPENAI_KEY  }}
         
     # - name: Upload coverage to Codecov [linux]
     #   run: |
