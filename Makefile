@@ -2,19 +2,33 @@
 # BUILD #
 #########
 develop:  ## install dependencies
-	python -m pip install aiofile
-	python -m pip install amazon_transcribe
-	python -m pip install numpy
-	python -m pip install openai
-	python -m pip install pyaudio
-	python -m pip install requests
-	python -m pip install sounddevice
-	python -m pip install urllib3
+	python -m pip install .[develop]
 
-test-dev:
-	python -m pip install coverage
-	python -m pip install black
-	python -m pip install flake8
+build: ## build libary and place bin in ./build
+	python setup.py build
+
+install:  ## install library
+	python -m pip install .
+
+uninstall:
+	pip uninstall openai-game-translator
+
+########
+# DIST #
+########
+dist-build:  # create source and wheel distribution in ./dist
+	python setup.py sdist bdist_wheel 
+
+dist-check: # check if distribution suits PyPi
+	python -m twine check dist/*
+
+dist: clean build dist-build dist-check  ## Build dists
+
+publish-test: # Upload python assets to PyPi test
+	python -m twine upload --repository testpypi dist/*
+
+publish:  # Upload python assets
+	python -m twine upload dist/*
 
 #########
 # TESTS #
@@ -28,24 +42,23 @@ test: ## test
 
 tests: test
 
-
 #########
 # LINTS #
 #########
 lint: ## omiting E501: line too long and F401 imported but unused
-	python -m black --check game_translator
-	python -m flake8 --extend-ignore=E501,F401 game_translator  
+	python -m black --check game_translator setup.py
+	python -m flake8 --extend-ignore=E501,F401 game_translator setup.py
 
 lints: lint
 
 format:  ## run autoformatting with black
-	python -m black game_translator
+	python -m black game_translator setup.py
 
 #########
 # CLEAN #
 #########
 clean: ## clean the repository
 	rm -rf tests/.coverage tests/coverage.xml
-	rm -rf dist *.egg-info
+	rm -rf dist *.egg-info build
 
 
