@@ -1,7 +1,7 @@
 #########
 # BUILD #
 #########
-develop:  ## install dependencies
+develop:  ## install develop dependencies -- package along with all dependencies
 	python -m pip install .[develop]
 
 build: ## build libary and place bin in ./build
@@ -53,6 +53,24 @@ lints: lint
 
 format:  ## run autoformatting with black
 	python -m black game_translator setup.py
+
+###########
+# VERSION #
+###########
+show-version:
+	bump2version --dry-run --allow-dirty setup.py --list | grep current | awk -F= '{print $2}'
+
+bump:
+	bump2version --current-version $(current_version) --new-version $(new_version) game_translator/_version.py pyproject.toml --allow-dirty	
+
+patch:
+	bump2version patch
+
+minor:
+	bump2version minor
+
+major:
+	bump2version major
 
 #########
 # CLEAN #
