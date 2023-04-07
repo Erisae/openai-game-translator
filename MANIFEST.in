@@ -1,0 +1,24 @@
+graft game_translator
+
+include LICENSE
+include README.md
+include CONTRIBUTING.md
+
+include .bumpversion.cfg
+include pyproject.toml
+include Makefile
+
+prune .github
+exclude .gitignore
+exclude .gitattributes
+
+recursive-include game_translator *.wav
+recursive-include tests *.coveragerc
+
+# Patterns to exclude from any directory
+global-exclude *~
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude .git
+global-exclude .ipynb_checkpoints
+global-exclude .DS_Store

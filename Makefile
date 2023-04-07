@@ -16,6 +16,11 @@ uninstall:
 ########
 # DIST #
 ########
+check:  ## check assets for packaging
+	check-manifest -v
+
+checks: check
+
 dist-build:  # create source and wheel distribution in ./dist
 	python setup.py sdist bdist_wheel 
 
