@@ -13,7 +13,7 @@ A game translation app that uses the ChatGPT API to recognize in-game speech (an
 
 ## Installation
 ```shell
-pip install openai-game-translator==0.0.5
+pip install openai-game-translator
 ```
 
 ## Quick Start
@@ -28,9 +28,12 @@ translate --xunfei_appid <appid> --xunfei_apikey  <apikey> --xunfei_apisecret <a
 
 In script, use
 ```python
+import openai
 from game_translator import  gameTranslator
+
+openai.api_key = "<openai_key>"
 translator = gameTranslator("aws_live")
-translator.openai_translate()
+translator.openai_translation()
 ```
 
 

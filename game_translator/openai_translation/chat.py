@@ -11,6 +11,7 @@ Version: 2.0
 """
 
 import openai
+import re
 
 
 def translate_sentence(content, language):
@@ -19,10 +20,14 @@ def translate_sentence(content, language):
 
     """
 
-    prompt = "translate to " + language + " : " + content
+    prompt = "please translate the following to " + language + " : " + content
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo", messages=[{"role": "user", "content": prompt}]
     )
+    format = "^['\"]|['\"]$"
+    res = completion.choices[0].message.content.strip()
+    res = re.sub(format, "", res)
+
     print("translation success...")
-    print(completion.choices[0].message.content.lstrip()[1:])
-    return completion.choices[0].message.content.lstrip()[1:]
+    print(res)
+    return res
