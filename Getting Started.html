@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started &mdash; openai-game-translator 1.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Functions" href="Functions.html" />
+    <link rel="prev" title="Welcome to openai-game-translator’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            openai-game-translator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uninstallation">Uninstallation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#terminal-usage">Terminal Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#script-usage">Script Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Development.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">openai-game-translator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Getting Started</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Getting Started.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading">¶</a></h2>
+<p>If you don’t already have local credentials setup for your AWS account, you can follow this <a class="reference external" href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html">guide</a> for configuring them using the AWS CLI.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>Since we use amazon-transcribe SDK, which is built on top of the <a class="reference external" href="https://github.com/awslabs/aws-crt-python">AWS Common Runtime (CRT)</a>, non-standard operating systems may need to compile these libraries themselves.</p></li>
+<li><p>Should at least set <cite>AWS_ACCESS_KEY_ID</cite> and <cite>AWS_SECRET_ACCESS_KEY</cite> environment variables and in <cite>[default]</cite> profile <cite>~/.aws/credentials</cite>.</p></li>
+</ul>
+</div>
+<p>Also, ensure that you have portaudio</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>portaudio19-dev<span class="w"> </span><span class="c1"># linux</span>
+brew<span class="w"> </span>install<span class="w"> </span>portaudio<span class="w"> </span><span class="c1"># macos</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h2>
+<p>Install the latest version from pip</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>openai-game-translator
+</pre></div>
+</div>
+<p>Install from github repository</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Erisae/openai-game-translator
+make<span class="w"> </span>build
+make<span class="w"> </span>install
+</pre></div>
+</div>
+</div>
+<div class="section" id="uninstallation">
+<h2>Uninstallation<a class="headerlink" href="#uninstallation" title="Permalink to this heading">¶</a></h2>
+<p>Uninstall the latest version from pip</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>uninstall<span class="w"> </span>openai-game-translator
+</pre></div>
+</div>
+<p>Uninstall from github repository</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>uninstall
+</pre></div>
+</div>
+</div>
+<div class="section" id="terminal-usage">
+<h2>Terminal Usage<a class="headerlink" href="#terminal-usage" title="Permalink to this heading">¶</a></h2>
+<p>In terminal, run command <code class="docutils literal notranslate"><span class="pre">translate</span></code> to get audio translated to text.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>translate<span class="w"> </span>--xunfei_appid<span class="w"> </span>&lt;xf_appid&gt;<span class="w"> </span>--xunfei_apikey<span class="w">  </span>&lt;xf_apikey&gt;<span class="w"> </span>--xunfei_apisecret<span class="w"> </span>&lt;xf_apisecret&gt;<span class="w"> </span>--openai_key<span class="w"> </span>&lt;openai_key&gt;<span class="w"> </span>-t<span class="w"> </span>&lt;model&gt;<span class="w"> </span>-o<span class="w"> </span>&lt;language&gt;<span class="w"> </span>--pre_recorded<span class="w"> </span>&lt;use_prerecored&gt;<span class="w"> </span>--file<span class="w"> </span>&lt;audio_path&gt;
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;xf_appid&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;xf_apikey&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;xf_apisecret&gt;</span></code>: audio transcription api tokens from <a class="reference external" href="https://www.xfyun.cn/">xunfei</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;openai_key&gt;</span></code>: <a class="reference external" href="https://platform.openai.com/account/api-keys">openai api key</a> is required for inferencing GPT model to translate.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;model&gt;</span></code>: audio transcription model to choose, select from <code class="docutils literal notranslate"><span class="pre">aws_pre</span></code>, <code class="docutils literal notranslate"><span class="pre">aws_live</span></code>, <code class="docutils literal notranslate"><span class="pre">xunfei</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;language&gt;</span></code>: translation target language, default is English.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;use_prerecorded&gt;</span></code>: whether to use prerecorded audio (1: yes, 0:no). When not using prerecorded audio, should ensure your device has sound card and the will detect and record audio for you.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;audio_path&gt;</span></code>: the path for prerecorded audio or to store the detected audio.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p><cite>&lt;openai_key&gt;</cite>, <cite>&lt;model&gt;</cite>, <cite>&lt;use_prerecorded&gt;</cite> are required parameters.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="script-usage">
+<h2>Script Usage<a class="headerlink" href="#script-usage" title="Permalink to this heading">¶</a></h2>
+<p>In Python script, first import library</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openai</span>
+<span class="kn">from</span> <span class="nn">game_translator</span> <span class="kn">import</span> <span class="n">gameTranslator</span>
+</pre></div>
+</div>
+<p>Then fill in openai api key for global usage</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="s2">&quot;&lt;openai_key&gt;&quot;</span>
+</pre></div>
+</div>
+<p>You can initialize multiple types of translators, using different transcription techniques</p>
+<ul>
+<li><p>Initialize a translation model with amazon live transcription</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator1</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;aws_live&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Initialize a translation model with amazon prerecorded transcription and no prerecorded audio file,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator2</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;aws_pre&quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;path_to_store&quot;</span><span class="p">,</span> <span class="n">prerecorded</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Initialize a translation model with amazon prerecorded transcription and prerecorded audio file,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator3</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;aws_pre&quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;path_to_prerecorded&quot;</span><span class="p">,</span> <span class="n">prerecorded</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Initialize a translation model with xunfei speed transcription and no prerecorded audio file,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator4</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;xunfei&quot;</span><span class="p">,</span> <span class="n">xunfei_appid</span><span class="o">=</span><span class="s2">&quot;xunfei_appid&quot;</span><span class="p">,</span> <span class="n">xunfei_apikey</span><span class="o">=</span><span class="s2">&quot;xunfei_apikey&quot;</span><span class="p">,</span> <span class="n">xunfei_apisecret</span><span class="o">=</span><span class="s2">&quot;xunfei_apisecret&quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;path_to_store&quot;</span><span class="p">,</span> <span class="n">prerecorded</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Initialize a translation model with xunfei speed transcription and prerecorded audio file,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator5</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;xunfei&quot;</span><span class="p">,</span> <span class="n">xunfei_appid</span><span class="o">=</span><span class="s2">&quot;xunfei_appid&quot;</span><span class="p">,</span> <span class="n">xunfei_apikey</span><span class="o">=</span><span class="s2">&quot;xunfei_apikey&quot;</span><span class="p">,</span> <span class="n">xunfei_apisecret</span><span class="o">=</span><span class="s2">&quot;xunfei_apisecret&quot;</span><span class="p">,</span>  <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;path_to_prerecorded&quot;</span><span class="p">,</span> <span class="n">prerecorded</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Finally, call <code class="docutils literal notranslate"><span class="pre">openai_translation()</span></code> to translate,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator</span><span class="o">.</span><span class="n">openai_translation</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This will output the transcription and translation result to terminal.</p>
+<p>You can also call to only transcribe,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator1</span><span class="o">.</span><span class="n">aws_live_transcription</span><span class="p">()</span>
+<span class="n">translator2</span><span class="o">.</span><span class="n">aws_prerecored_transcription</span><span class="p">()</span>
+<span class="n">translator3</span><span class="o">.</span><span class="n">aws_prerecored_transcription</span><span class="p">()</span>
+<span class="n">translator4</span><span class="o">.</span><span class="n">xunfei_transcription</span><span class="p">()</span>
+<span class="n">translator5</span><span class="o">.</span><span class="n">xunfei_transcription</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to openai-game-translator’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Functions.html" class="btn btn-neutral float-right" title="Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Yuhan Xia.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
