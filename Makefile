@@ -86,11 +86,15 @@ doc:
 	$(MAKE) -C docs/ clean
 	$(MAKE) -C docs/ html
 
+doc: 
+	$(MAKE) -C docs/ clean
+	$(MAKE) -C docs/ html
+
 pages: 
 	rm -rf $(MYREPO)
 	git clone -b gh-pages https://github.com/Erisae/openai-game-translator.git $(MYREPO)
 	rm -rf $(MYREPO)/*
-	cp -r docs/build/html/* $(MYREPO)
+	cp -r docs/_build/html/* $(MYREPO)
 	cd $(MYREPO);\
 	git add -A ;\
 	git commit -a -m 'auto-updating docs' ;\
