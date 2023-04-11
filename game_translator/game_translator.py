@@ -1,14 +1,3 @@
-"""
-This module provides translator main function.
-
-Classes:
-- translator: a self designed translaor
-
-Author: Yuhan Xia
-Copyright: Copyright (c) 2023
-License: Apache-2.0
-Version: 2.0
-"""
 import asyncio
 import argparse
 import openai
@@ -22,9 +11,18 @@ from .aws_streaming_transcription import prerecorded_stream
 
 class gameTranslator:
     """
-    A class representing a translator.
+    An audio game translator class,
+
+    This class provides functinalities for ...
 
     Attributes:
+        filepath(str): file path for prerecorded audio file or to be recorded.
+        transcription_model(str): choose from "aws_pre", "aws_live" and "xunfei".
+        appid(str): xunfei transcription appid.
+        apikey(str): xunfei transcription apikey.
+        apisecret(str): xunfei transcription apisecret.
+        pre_recorded(bool): whether needs prerecorded audio file.
+        target_language(str): translation output language.
     """
 
     def __init__(
@@ -37,6 +35,18 @@ class gameTranslator:
         prerecorded=True,
         output_language="English",
     ):
+        """
+        Initialize a new instance of gameTranslator.
+
+        Args:
+            transcription_model(str): choose from "aws_pre", "aws_live" and "xunfei".
+            filepath(str): file path for prerecorded audio file or to be recorded.
+            xunfei_appid(str): xunfei transcription appid.
+            xunfei_apikey(str): xunfei transcription apikey.
+            xunfei_apisecret(str): xunfei transcription apisecret.
+            prerecorded(bool): whether needs prerecorded audio file.
+            output_language(str): translation output language.
+        """
         self.filepath = ""
         self.transcription_model = transcription_model
         if self.transcription_model == "xunfei":
@@ -52,16 +62,24 @@ class gameTranslator:
 
     def record_audio(self):
         """
-        A function to record video.
+        Detects and records audio using pyaudio, saves at self.filepath.
 
+        Args:
+            None
+        Returns:
+            None
         """
         recorder = Detector(recording_file=self.filepath)
         recorder.detect_audio()
 
     def xunfei_transcription(self):
         """
-        A function to call xunfei transcription
+        Transcripts audio file with xunfei speed transcription, if not self.pre_recorded, record() first.
 
+        Args:
+            None
+        Returns:
+            str: transcription result.
         """
         if not self.pre_recorded:
             self.record_audio()
@@ -74,8 +92,12 @@ class gameTranslator:
 
     def aws_prerecored_transcription(self):
         """
-        A function to call aws prerecorded transcription
+        Transcripts audio file with awd_prerecorded transcription, if not self.pre_recorded, record() first.
 
+        Args:
+            None
+        Returns:
+            str: transcription result.
         """
         if not self.pre_recorded:
             self.record_audio()
@@ -88,8 +110,12 @@ class gameTranslator:
 
     def aws_live_transcription(self):
         """
-        A function to call aws live transcription
+        Transcripts audio file with aws_live transcription. Record with sounddevice and send stream to aws simultaneously.
 
+        Args:
+            None
+        Returns:
+            str: transcription result.
         """
         loop = asyncio.get_event_loop()
         result = loop.run_until_complete(live_stream.basic_transcribe())
@@ -98,8 +124,12 @@ class gameTranslator:
 
     def openai_translation(self):
         """
-        A function to do translation
+        Translates text to target language using openai.
 
+        Args:
+            None
+        Returns:
+            str: translation result.
         """
         # first do transcription then translation
         if self.transcription_model == "xunfei":
@@ -114,6 +144,9 @@ class gameTranslator:
 
 
 def main():
+    """
+    main() function that takes cmd line input to instantiate and run a translator.
+    """
     parser = argparse.ArgumentParser(description="Description of your program")
     parser.add_argument(
         "--file", type=str, default="./audio/test.wav", help="file path"
