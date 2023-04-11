@@ -3,3 +3,4 @@ docutils==0.16
 sphinx_autodoc_typehints==1.22
 sphinx_rtd_theme==1.2.0
 readthedocs-sphinx-search==0.1.1
+recommonmark==0.7.1
