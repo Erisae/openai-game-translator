@@ -4,4 +4,11 @@ sphinx_autodoc_typehints==1.22
 sphinx_rtd_theme==1.2.0
 readthedocs-sphinx-search==0.1.1
 recommonmark==0.7.1
-openai
+aiofile==3.8.5
+amazon-transcribe==0.6.1
+numpy==1.24.2
+openai==0.27.2
+pyaudio==0.2.13
+requests==2.27.1
+sounddevice==0.4.6
+urllib3==1.26.15
