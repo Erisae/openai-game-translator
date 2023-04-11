@@ -7,12 +7,12 @@
     git clone https://github.com/Erisae/openai-game-translator.git
     ```
 3. Ensure that you have local credentials setup for your AWS account.
-3. Ensure that you have portaudio.
+4. Ensure that you have portaudio.
     ```shell
     sudo apt install portaudio19-dev # linux
     brew install portaudio # macos
     ```
-4. Install development dependencies.
+5. Install development dependencies.
     ```shell
     make develop
     ```
