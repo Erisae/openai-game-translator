@@ -1,3 +1,5 @@
+MYREPO=/tmp/docs/openai-game-translator
+
 #########
 # BUILD #
 #########
@@ -76,6 +78,24 @@ minor:
 
 major:
 	bump2version major
+
+#########
+## DOC ##
+#########
+doc: 
+	$(MAKE) -C docs/ clean
+	$(MAKE) -C docs/ html
+
+pages: 
+	rm -rf $(MYREPO)
+	git clone -b gh-pages https://github.com/Erisae/openai-game-translator.git $(MYREPO)
+	rm -rf $(MYREPO)/*
+	cp -r docs/_build/html/* $(MYREPO)
+	cd $(MYREPO);\
+	touch .nojekyll;\
+	git add -A ;\
+	git commit -a -m 'auto-updating docs' ;\
+	git push
 
 #########
 # CLEAN #
