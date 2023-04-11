@@ -90,6 +90,10 @@ pages:
 	rm -rf $(MYREPO)
 	git clone -b gh-pages https://github.com/Erisae/openai-game-translator.git $(MYREPO)
 	rm -rf $(MYREPO)/*
+	rm $(MYREPO)/.bumpversion.cfg
+	rm $(MYREPO)/.readthedocs.yaml
+	rm $(MYREPO)/.gitignore
+	rm -rf $(MYREPO)/.github
 	cp -r docs/_build/html/* $(MYREPO)
 	cd $(MYREPO);\
 	git add -A ;\
