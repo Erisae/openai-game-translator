@@ -6,6 +6,8 @@ ChatGPT API based video game audio translator application and web service
 [![build](https://github.com/Erisae/openai-game-translator/actions/workflows/build.yml/badge.svg)](https://github.com/A-Chaudhary/age3d/actions?query=workflow%3A%22Build+Status%22)
 [![codecov](https://codecov.io/gh/Erisae/openai-game-translator/branch/main/graph/badge.svg?token=NI2HGVWMKI)](https://codecov.io/gh/Erisae/openai-game-translator)
 [![PyPI](https://img.shields.io/pypi/v/openai-game-translator)](https://pypi.org/project/openai-game-translator/)
+[![Documentation Status](https://readthedocs.org/projects/openai-game-translator/badge/?version=latest)](https://openai-game-translator.readthedocs.io/en/latest/?badge=latest)
+[![Doc](https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=GitHub%20Pages&logoColor=white)](https://erisae.github.io/openai-game-translator/)
 
 
 ## Overview
