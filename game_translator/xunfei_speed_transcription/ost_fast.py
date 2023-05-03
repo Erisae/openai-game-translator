@@ -22,6 +22,7 @@ from .seve_file import SeveFile
 
 LANGUAGE_MAPPING = {"english": "en_us", "chinese": "zh_cn"}
 
+
 # create and query
 class xf_transcriptor:
     """
@@ -161,7 +162,9 @@ class xf_transcriptor:
         """
         post_data = {
             "common": {"app_id": self.APPID},
-            "business": {"task_id": task_id,},
+            "business": {
+                "task_id": task_id,
+            },
         }
         body = json.dumps(post_data)
         return body
