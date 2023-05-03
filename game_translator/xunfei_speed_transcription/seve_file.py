@@ -95,8 +95,8 @@ class SeveFile:
             resp = requests.post(url, headers=headerss, data=file_data, timeout=8)
             # print("Chunk upload success. STATUS：", resp.status_code, resp.text)
             return resp.json()
-        except Exception:
-            # print("Chunk upload failed！Exception ：%s" % e)
+        except Exception as e:
+            print("Chunk upload failed! Exception :%s" % e)
             return False
 
     # chunk upload complete

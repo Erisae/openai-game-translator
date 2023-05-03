@@ -6,10 +6,8 @@ import io
 import numpy as np
 sys.path.append(os.path.abspath("../"))
 from unittest.mock import patch
-from game_translator.aws_streaming_transcription.prerecorded_stream import (
-    basic_transcribe,
-    select_result,
-)
+from game_translator.aws_streaming_transcription.prerecorded_stream import prerecorded_transcribe
+from game_translator.aws_streaming_transcription.settings import select_result
 
 
 def contains_substring(string, substring):
@@ -25,7 +23,7 @@ class TestPrerecorded(unittest.TestCase):
         with patch("sys.stdout", new=io.StringIO()) as fake_out:
             # Run the function under test and get the result
             loop1 = asyncio.get_event_loop()
-            result = loop1.run_until_complete(basic_transcribe(self.filepath))
+            result = loop1.run_until_complete(prerecorded_transcribe(input_language="english", audio_path=self.filepath))
 
             # Check that the result is as expected
             self.assertIsNotNone(result)

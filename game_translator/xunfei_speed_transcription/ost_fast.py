@@ -20,6 +20,7 @@ import requests
 
 from .seve_file import SeveFile
 
+LANGUAGE_MAPPING = {"english": "en_us", "chinese": "zh_cn"}
 
 # create and query
 class xf_transcriptor:
@@ -29,7 +30,7 @@ class xf_transcriptor:
     Attributes:
     """
 
-    def __init__(self, appid, apikey, apisecret, file_path):
+    def __init__(self, appid, apikey, apisecret, file_path, input_language):
         # POST request
         self.Host = "ost-api.xfyun.cn"
         self.RequestUriCreate = "/v2/ost/pro_create"
@@ -54,11 +55,10 @@ class xf_transcriptor:
         self.Date = self.httpdate(cur_time_utc)
         # test file setting
         self.BusinessArgsCreate = {
-            "language": "zh_cn",
+            "language": LANGUAGE_MAPPING[input_language],
             "accent": "mandarin",
             "language_type": 1,
             "domain": "pro_ost_ed",
-            # "callback_url": "http://IP:port/xxx/"
         }
 
     def hashlib_256(self, res):
@@ -161,9 +161,7 @@ class xf_transcriptor:
         """
         post_data = {
             "common": {"app_id": self.APPID},
-            "business": {
-                "task_id": task_id,
-            },
+            "business": {"task_id": task_id,},
         }
         body = json.dumps(post_data)
         return body
@@ -193,7 +191,6 @@ class xf_transcriptor:
         body = self.get_create_body()
         headers_create = self.init_header(body, self.RequestUriCreate)
         task_id = self.call(self.urlCreate, body, headers_create)
-        # print(task_id)
         return task_id
 
     def task_query(self, task_id):

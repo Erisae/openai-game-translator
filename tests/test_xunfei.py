@@ -15,12 +15,8 @@ class TestXFTranscriptor(unittest.TestCase):
     def setUp(self):  #
         self.file_path = "../game_translator/audio/audio_sample_little.wav"
         self.transcriptor = xf_transcriptor(
-            self.appid, self.apikey, self.apisecret, self.file_path
+            self.appid, self.apikey, self.apisecret, self.file_path, input_language="chinese"
         )
-
-    # def test_task_create(self):
-    #     task_id = self.transcriptor.task_create()
-    #     self.assertIsNotNone(task_id)
 
     def test_get_result(self):
         with patch("sys.stdout", new=io.StringIO()) as fake_out:

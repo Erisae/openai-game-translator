@@ -33,7 +33,8 @@ class gameTranslator:
         xunfei_apikey="",
         xunfei_apisecret="",
         prerecorded=True,
-        output_language="English",
+        input_language="chinese",
+        output_language="english",
     ):
         """
         Initialize a new instance of gameTranslator.
@@ -45,6 +46,7 @@ class gameTranslator:
             xunfei_apikey(str): xunfei transcription apikey.
             xunfei_apisecret(str): xunfei transcription apisecret.
             prerecorded(bool): whether needs prerecorded audio file.
+            input_language(str): transcription input language.
             output_language(str): translation output language.
         """
         self.filepath = ""
@@ -57,7 +59,8 @@ class gameTranslator:
 
         if self.transcription_model == "aws_pre":
             self.filepath = filepath
-        self.target_language = output_language
+        self.input_language = input_language
+        self.output_language = output_language
         self.pre_recorded = prerecorded
 
     def record_audio(self):
@@ -84,7 +87,7 @@ class gameTranslator:
         if not self.pre_recorded:
             self.record_audio()
         transcriptor = xf_transcriptor(
-            self.appid, self.apikey, self.apisecret, self.filepath
+            self.appid, self.apikey, self.apisecret, self.filepath, self.input_language
         )
         transcriptor.get_fileurl()
         content = transcriptor.get_result()
@@ -103,7 +106,7 @@ class gameTranslator:
             self.record_audio()
         loop = asyncio.get_event_loop()
         result = loop.run_until_complete(
-            prerecorded_stream.basic_transcribe(self.filepath)
+            prerecorded_stream.prerecorded_transcribe(self.filepath, self.input_language)
         )
         # loop.close()
         return result
@@ -118,7 +121,7 @@ class gameTranslator:
             str: transcription result.
         """
         loop = asyncio.get_event_loop()
-        result = loop.run_until_complete(live_stream.basic_transcribe())
+        result = loop.run_until_complete(live_stream.live_transcribe(self.input_language))
         # loop.close()
         return result
 
@@ -139,7 +142,7 @@ class gameTranslator:
         elif self.transcription_model == "aws_live":
             text = self.aws_live_transcription()
 
-        res = translate_sentence(text, self.target_language)
+        res = translate_sentence(text, self.output_language)
         return res
 
 
@@ -147,7 +150,7 @@ def main():
     """
     main() function that takes cmd line input to instantiate and run a translator.
     """
-    parser = argparse.ArgumentParser(description="Description of your program")
+    parser = argparse.ArgumentParser(description="audio based openai game translator")
     parser.add_argument(
         "--file", type=str, default="./audio/test.wav", help="file path"
     )
@@ -161,14 +164,21 @@ def main():
         required=True,
         type=str,
         choices=["xunfei", "aws_pre", "aws_live"],
-        help="xunfei and aws_pre need prerecorded audios, aws_live not",
+        help="[xunfei] and [aws_pre] need prerecorded audio, [aws_live] not",
+    )
+    parser.add_argument(
+        "-i",
+        "--input_language",
+        required=True,
+        type=str,
+        help="audio input language",
     )
     parser.add_argument(
         "-o",
         "--output_language",
         required=True,
         type=str,
-        help="output text's language",
+        help="target translation language",
     )
     parser.add_argument(
         "--pre_recorded",
@@ -176,7 +186,7 @@ def main():
         type=int,
         choices=[0, 1],
         default=0,
-        help="when select 1, use audio that already exist",
+        help="[1]use prerecorded audio, [0]record audio",
     )
 
     args = parser.parse_args()
@@ -189,6 +199,7 @@ def main():
         xunfei_apikey=args.xunfei_apikey,
         xunfei_apisecret=args.xunfei_apisecret,
         prerecorded=args.pre_recorded,
+        input_language=args.input_language,
         output_language=args.output_language,
     )
     new_translator.openai_translation()
@@ -198,6 +209,6 @@ if __name__ == "__main__":
     main()
 
 
-# todo: language change
 # todo: precision
 # todo: audio transmitting
+# todo: add chat context [currently unavailable]

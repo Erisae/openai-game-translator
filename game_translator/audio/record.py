@@ -43,7 +43,7 @@ class Detector:
 
         """
 
-        print("start detecting audio ... ")
+        print("start detecting audio...")
         # print(self.pyaudio_instance.open.read(1024))
         stream = self.pyaudio_instance.open(
             format=self.stream_format,
@@ -67,7 +67,7 @@ class Detector:
 
             # 100 consecutive samples of low audio
             if low_audio_flag > self.max_low_audio_flag:
-                print("detecting finished ... ")
+                print("detecting finished...")
                 break
             self.audio_frames.append(stream_data)
         stream.stop_stream()

@@ -10,7 +10,7 @@ from test_record import TestRecord
 from test_game_translator import TranslatorTest
 
 def main():
-    parser_test = argparse.ArgumentParser(description="Description of your program")
+    parser_test = argparse.ArgumentParser(description="Test openai-game-translator")
     parser_test.add_argument(
         "--xunfei_appid", required=True, type=str, help="xunfei transcription appid"
     )
@@ -24,7 +24,7 @@ def main():
         help="xunfei transccription api secret",
     )
     parser_test.add_argument(
-        "--openai_key", required=True, type=str, help="open ai translatio api key"
+        "--openai_key", required=True, type=str, help="openai api key"
     )
     args_test = parser_test.parse_args()
     openai.api_key = args_test.openai_key

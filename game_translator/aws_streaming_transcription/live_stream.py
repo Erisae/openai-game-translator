@@ -2,10 +2,10 @@ import asyncio
 import sounddevice as sd
 import numpy as np
 
-from difflib import SequenceMatcher
 from amazon_transcribe.client import TranscribeStreamingClient
 from amazon_transcribe.handlers import TranscriptResultStreamHandler
 from amazon_transcribe.model import TranscriptEvent
+from .settings import *
 
 """
 https://python-sounddevice.readthedocs.io/en/0.3.7/
@@ -13,7 +13,7 @@ sd.decault.device = #
 """
 
 
-class MyEventHandler(TranscriptResultStreamHandler):
+class LiveEventHandler(TranscriptResultStreamHandler):
     def __init__(self, output_stream):
         super().__init__(output_stream)
         self.all_results = []
@@ -30,30 +30,12 @@ class MyEventHandler(TranscriptResultStreamHandler):
                 self.last = alt.transcript
 
 
-def similarity(a, b):
-    return SequenceMatcher(None, a, b).ratio()
-
-
-def select_result(sentences):
-    # filter and concact
-    s = ""
-    last = ""
-    for cur in sentences:
-        if similarity(last, cur) < 0.5:  # not similar: concact
-            s += last
-            last = cur
-        elif len(last) < len(cur):  # similar and longer: update
-            last = cur
-    s += last
-    return "".join(s)
-
-
-async def basic_transcribe(max_low_audio_flag=20, audio_min_rms=100):
-    client = TranscribeStreamingClient(region="us-east-2")
+async def live_transcribe(input_language: str):
+    client = TranscribeStreamingClient(region=REGION)
 
     stream = await client.start_stream_transcription(
-        language_code="en-US",
-        media_sample_rate_hz=16000,
+        language_code=LANGUAGE_MAPPING[input_language],
+        media_sample_rate_hz=SAMPLE_RATE,
         media_encoding="pcm",
     )
 
@@ -61,16 +43,19 @@ async def basic_transcribe(max_low_audio_flag=20, audio_min_rms=100):
         low_audio_flag = 0
         while True:
             data = sd.rec(
-                1024 * 8, samplerate=16000, channels=1, blocking=True, dtype="int16"
+                CHUNK_SIZE,
+                samplerate=SAMPLE_RATE,
+                channels=CHANNEL_NUMS,
+                blocking=True,
+                dtype="int16",
             )
 
             data[np.isnan(data)] = 0
             rms = np.sqrt(np.mean(np.square(data)))
 
-            low_audio_flag = 0 if rms > audio_min_rms else low_audio_flag + 1
+            low_audio_flag = 0 if rms > AUDIO_MIN_RMS else low_audio_flag + 1
 
-            # 100 consecutive samples of low audio
-            if low_audio_flag > max_low_audio_flag:
+            if low_audio_flag > MAX_LOW_AUDIO_FLAG:
                 break
 
             # convert the audio frame to byte stream and send it to service.
@@ -78,7 +63,7 @@ async def basic_transcribe(max_low_audio_flag=20, audio_min_rms=100):
 
         await stream.input_stream.end_stream()
 
-    handler = MyEventHandler(stream.output_stream)
+    handler = LiveEventHandler(stream.output_stream)
     await asyncio.gather(write_chunks(), handler.handle_events())
 
     s = select_result(handler.all_results)
