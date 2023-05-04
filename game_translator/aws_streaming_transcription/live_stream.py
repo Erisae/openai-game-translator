@@ -1,6 +1,6 @@
 import asyncio
-import sounddevice as sd
-import numpy as np
+import pyaudio
+import audioop
 
 from amazon_transcribe.client import TranscribeStreamingClient
 from amazon_transcribe.handlers import TranscriptResultStreamHandler
@@ -41,25 +41,33 @@ async def live_transcribe(input_language: str):
 
     async def write_chunks():
         low_audio_flag = 0
-        while True:
-            data = sd.rec(
-                CHUNK_SIZE,
-                samplerate=SAMPLE_RATE,
-                channels=CHANNEL_NUMS,
-                blocking=True,
-                dtype="int16",
-            )
+        record_stream = pyaudio.PyAudio().open(
+            format=pyaudio.paInt16,
+            channels=CHANNEL_NUMS,
+            rate=SAMPLE_RATE,
+            input=True,
+            frames_per_buffer=CHUNK_SIZE,
+        )
+        print("start detecting audio...")
 
-            data[np.isnan(data)] = 0
-            rms = np.sqrt(np.mean(np.square(data)))
+        while True:
+            data = record_stream.read(CHUNK_SIZE)
+            rms = audioop.rms(data, 2)
 
             low_audio_flag = 0 if rms > AUDIO_MIN_RMS else low_audio_flag + 1
+            # print(
+            #     "rms={}({}), low_audio_flag={}({})".format(
+            #         rms, AUDIO_MIN_RMS, low_audio_flag, MAX_LOW_AUDIO_FLAG
+            #     )
+            # )  # test
 
+            show_realtime_rms(rms)
             if low_audio_flag > MAX_LOW_AUDIO_FLAG:
+                print("\ndetecting finished...")
                 break
 
             # convert the audio frame to byte stream and send it to service.
-            await stream.input_stream.send_audio_event(audio_chunk=data.tobytes())
+            await stream.input_stream.send_audio_event(audio_chunk=data)  # tobytes()
 
         await stream.input_stream.end_stream()
 

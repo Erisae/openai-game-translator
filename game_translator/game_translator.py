@@ -49,17 +49,13 @@ class gameTranslator:
             input_language(str): transcription input language.
             output_language(str): translation output language.
         """
-        self.filepath = ""
         self.pre_recorded = prerecorded
         self.transcription_model = transcription_model
         if self.transcription_model == "xunfei":
             self.appid = xunfei_appid
             self.apikey = xunfei_apikey
             self.apisecret = xunfei_apisecret
-            self.filepath = filepath
-
-        if self.transcription_model == "aws_pre" and self.pre_recorded:
-            self.filepath = filepath
+        self.filepath = filepath
         self.input_language = input_language
         self.output_language = output_language
 
@@ -222,12 +218,6 @@ def main():
 
     parser_aws_pre = modelparsers.add_parser("aws_pre")
     parser_aws_pre.add_argument(
-        "--pre_recorded",
-        dest="pre_recorded_aws",
-        action="store_true",
-        help="if present, use prerecorded audio file in aws_pre",
-    )
-    parser_aws_pre.add_argument(
         "--file",
         dest="aws_file",
         type=str,
@@ -235,6 +225,13 @@ def main():
         default="./audio/test.wav",
         help="audio file path",
     )
+    parser_aws_pre.add_argument(
+        "--pre_recorded",
+        dest="pre_recorded_aws",
+        action="store_true",
+        help="if present, use prerecorded audio file in aws_pre",
+    )
+
 
     parser_aws_live = modelparsers.add_parser("aws_live")
 
@@ -260,9 +257,7 @@ def main():
         args.transcription_model,
         filepath=args.xunfei_file
         if hasattr(args, "xunfei_file")
-        else args.aws_file
-        if hasattr(args, "aws_file")
-        else "",
+        else (args.aws_file if hasattr(args, "aws_file") else ""),
         xunfei_appid=args.xunfei_appid if hasattr(args, "xunfei_appid") else "",
         xunfei_apikey=args.xunfei_apikey if hasattr(args, "xunfei_apikey") else "",
         xunfei_apisecret=args.xunfei_apisecret
@@ -270,9 +265,7 @@ def main():
         else "",
         prerecorded=args.pre_recorded_xunfei
         if hasattr(args, "pre_recorded_xunfei")
-        else args.pre_recorded_aws
-        if hasattr(args, "pre_recorded_aws")
-        else False,
+        else (args.pre_recorded_aws if hasattr(args, "pre_recorded_aws") else False),
         input_language=args.input_language,
         output_language=args.output_language,
     )
@@ -286,6 +279,9 @@ if __name__ == "__main__":
 # todo: precision
 # todo: audio transmitting
 # todo: add chat context [currently unavailable]
-# todo: add model description when initialize a model
-# todo: add argument constraint relationship [added]
+# [done]: add model description when initialize a model
+# [done]: add argument constraint relationship
 # todo: duplicate in transcription output
+# todo: add timer
+# [done]: sounddevice -> pyaudio, chunksize matters
+# [done]: todo: audio rms bar
