@@ -27,12 +27,9 @@ class TestOpenai(unittest.TestCase):
                 # Call the function under test
                 with patch("sys.stdout", new=io.StringIO()) as fake_out:
                     result = translate_sentence(sentence, self.language)
+                    
                     # Check that the result is as expected
-                    self.assertTrue(
-                        contains_substring(
-                            fake_out.getvalue().strip(), "translation success..."
-                        )
-                    )
+                    self.assertIn("translation success...", fake_out.getvalue().strip())
                     self.assertIsNotNone(result)
 
 

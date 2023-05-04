@@ -10,10 +10,6 @@ from game_translator.aws_streaming_transcription.prerecorded_stream import prere
 from game_translator.aws_streaming_transcription.settings import select_result
 
 
-def contains_substring(string, substring):
-    return substring in string
-
-
 class TestPrerecorded(unittest.TestCase):
     def setUp(self):
         self.filepath = "../game_translator/audio/audio_sample_little.wav"
@@ -27,11 +23,7 @@ class TestPrerecorded(unittest.TestCase):
 
             # Check that the result is as expected
             self.assertIsNotNone(result)
-            self.assertTrue(
-                contains_substring(
-                    fake_out.getvalue().strip(), "transcription success..."
-                )
-            )
+            self.assertIn("transcription success...", fake_out.getvalue().strip())
 
     def test_select_result(self):
         # Set up test cases for select_result function

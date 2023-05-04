@@ -7,11 +7,6 @@ from amazon_transcribe.handlers import TranscriptResultStreamHandler
 from amazon_transcribe.model import TranscriptEvent
 from .settings import *
 
-"""
-https://python-sounddevice.readthedocs.io/en/0.3.7/
-sd.decault.device = #
-"""
-
 
 class LiveEventHandler(TranscriptResultStreamHandler):
     def __init__(self, output_stream):
@@ -30,7 +25,7 @@ class LiveEventHandler(TranscriptResultStreamHandler):
                 self.last = alt.transcript
 
 
-async def live_transcribe(input_language: str):
+async def live_transcribe(input_language: str, audio_min_rms=AUDIO_MIN_RMS, max_low_audio_flag=MAX_LOW_AUDIO_FLAG):
     client = TranscribeStreamingClient(region=REGION)
 
     stream = await client.start_stream_transcription(
@@ -54,15 +49,10 @@ async def live_transcribe(input_language: str):
             data = record_stream.read(CHUNK_SIZE)
             rms = audioop.rms(data, 2)
 
-            low_audio_flag = 0 if rms > AUDIO_MIN_RMS else low_audio_flag + 1
-            # print(
-            #     "rms={}({}), low_audio_flag={}({})".format(
-            #         rms, AUDIO_MIN_RMS, low_audio_flag, MAX_LOW_AUDIO_FLAG
-            #     )
-            # )  # test
+            low_audio_flag = 0 if rms > audio_min_rms else low_audio_flag + 1
 
-            show_realtime_rms(rms)
-            if low_audio_flag > MAX_LOW_AUDIO_FLAG:
+            show_realtime_rms(rms, audio_min_rms=audio_min_rms)
+            if low_audio_flag > max_low_audio_flag:
                 print("\ndetecting finished...")
                 break
 

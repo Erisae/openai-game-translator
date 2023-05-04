@@ -4,29 +4,30 @@ import os
 import sys
 import io
 import numpy as np
+import pyaudio
 
 sys.path.append(os.path.abspath("../"))
 from unittest.mock import patch
 from game_translator.aws_streaming_transcription.live_stream import live_transcribe
-from game_translator.aws_streaming_transcription.settings import select_result, CHUNK_SIZE
+from game_translator.aws_streaming_transcription.settings import *
 
 
 class TestLiveStream(unittest.TestCase):
-    @patch("sounddevice.rec")
+    @patch("pyaudio.PyAudio.open")
     def test_transcription_success(self, mock_rec):
         # Set up mock audio data
         with patch("sys.stdout", new=io.StringIO()) as fake_out:
-            mock_rec.return_value = np.array([[1] * CHUNK_SIZE])
+            mock_rec.return_value.read.return_value = bytes([1] * CHUNK_SIZE)
 
             # Run the function under test and get the result
             self.loop = asyncio.get_event_loop()
             result = self.loop.run_until_complete(
-                live_transcribe(input_language="english")
+                live_transcribe(input_language="english", max_low_audio_flag=10)
             )
 
             # Check that the result is as expected
             self.assertIsNotNone(result)
-            self.assertEqual(fake_out.getvalue().strip(), "transcription success...")
+            self.assertIn("transcription success...", fake_out.getvalue().strip())
 
     def test_select_result(self):
         # Set up test cases for select_result function

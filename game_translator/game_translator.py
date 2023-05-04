@@ -141,7 +141,7 @@ class gameTranslator:
 
     def aws_live_transcription(self):
         """
-        Transcripts audio file with aws_live transcription. Record with sounddevice and send stream to aws simultaneously.
+        Transcripts audio file with aws_live transcription. Record with pyaudio and send stream to aws simultaneously.
 
         Args:
             None
@@ -231,7 +231,6 @@ def main():
         action="store_true",
         help="if present, use prerecorded audio file in aws_pre",
     )
-
 
     parser_aws_live = modelparsers.add_parser("aws_live")
 

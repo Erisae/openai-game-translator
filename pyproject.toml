@@ -25,7 +25,6 @@ dependencies = [
     "openai==0.27.2",
     "pyaudio==0.2.13",
     "requests==2.27.1",
-    "sounddevice==0.4.6",
     "urllib3==1.26.15"
 ]
 
