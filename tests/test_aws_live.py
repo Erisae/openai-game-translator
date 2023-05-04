@@ -36,6 +36,7 @@ class TestLiveStream(unittest.TestCase):
             (["goodbye", " world", "worldok"], "goodbyeworldok"),
             (["hello.", "hello", "world"], "hello.world"),
             (["hello", "world", "hello ", "world"], "helloworldhello world"),
+            (["hello", "hella word, this is the first publication"], "hella word, this is the first publication"),
         ]
         for sentences, expected in test_cases:
             with self.subTest(sentences=sentences):

@@ -10,7 +10,7 @@ CHANNEL_NUMS = 1
 CHUNK_SIZE = 1024
 REGION = "us-east-1"  # new york
 SAMPLE_RATE = 16000
-MIN_SIMILARITY = 0.5
+MIN_SIMILARITY = 0.3
 
 LANGUAGE_MAPPING = {
     "english": "en-US",
@@ -25,15 +25,24 @@ LANGUAGE_MAPPING = {
 
 
 def similarity(a, b):
-    return SequenceMatcher(None, a, b).ratio()
+    """
+    works quite good, use minimal len from ab to count ratio but only update when next is longer
+    """
+    matcher = SequenceMatcher(None, a, b)
+    match = matcher.find_longest_match(0, len(a), 0, len(b))
+    match_len = match.size
+    if(min(len(a), len(b)) != 0):
+        return match_len / min(len(a), len(b))
+    else:
+        return 0
 
 
-def select_result(sentences):
+def select_result(sentences, min_similarity=MIN_SIMILARITY):
     # filter and concact
     s = ""
     last = ""
     for cur in sentences:
-        if similarity(last, cur) < MIN_SIMILARITY:  # not similar: concact
+        if similarity(last, cur) < min_similarity:  # not similar: concact
             s += last
             last = cur
         elif len(last) < len(cur):  # similar and longer: update

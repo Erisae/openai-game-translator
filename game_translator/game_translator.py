@@ -1,6 +1,7 @@
 import asyncio
 import argparse
 import openai
+import time
 
 from .xunfei_speed_transcription.ost_fast import xf_transcriptor
 from .openai_translation.chat import translate_sentence
@@ -51,10 +52,9 @@ class gameTranslator:
         """
         self.pre_recorded = prerecorded
         self.transcription_model = transcription_model
-        if self.transcription_model == "xunfei":
-            self.appid = xunfei_appid
-            self.apikey = xunfei_apikey
-            self.apisecret = xunfei_apisecret
+        self.appid = xunfei_appid
+        self.apikey = xunfei_apikey
+        self.apisecret = xunfei_apisecret
         self.filepath = filepath
         self.input_language = input_language
         self.output_language = output_language
@@ -88,6 +88,9 @@ class gameTranslator:
         print("Input  language : {}".format(self.input_language))
         print("Output language : {}".format(self.output_language))
         print("****************************************")
+
+    def show_time(self, elapsed_time):
+        print(f"Elapsed time: {elapsed_time:.3f} seconds")
 
     def record_audio(self):
         """
@@ -164,6 +167,7 @@ class gameTranslator:
         Returns:
             str: translation result.
         """
+        start_time = time.time()
         self.show_translator_info()
 
         # first do transcription then translation
@@ -175,6 +179,8 @@ class gameTranslator:
             text = self.aws_live_transcription()
 
         res = translate_sentence(text, self.output_language)
+        end_time = time.time()
+        self.show_time(end_time - start_time)
         return res
 
 
@@ -274,13 +280,12 @@ def main():
 if __name__ == "__main__":
     main()
 
-
 # todo: precision
 # todo: audio transmitting
-# todo: add chat context [currently unavailable]
+# todo: add chat context [currently unavailable with openai api]
 # [done]: add model description when initialize a model
 # [done]: add argument constraint relationship
-# todo: duplicate in transcription output
-# todo: add timer
+# [done]: duplicate in transcription output
+# [done]: add timer
 # [done]: sounddevice -> pyaudio, chunksize matters
-# [done]: todo: audio rms bar
+# [done]: audio rms bar
