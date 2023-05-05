@@ -31,7 +31,7 @@ def similarity(a, b):
     matcher = SequenceMatcher(None, a, b)
     match = matcher.find_longest_match(0, len(a), 0, len(b))
     match_len = match.size
-    if(min(len(a), len(b)) != 0):
+    if min(len(a), len(b)) != 0:
         return match_len / min(len(a), len(b))
     else:
         return 0

@@ -23,7 +23,8 @@ class gameTranslator:
         apikey(str): xunfei transcription apikey.
         apisecret(str): xunfei transcription apisecret.
         pre_recorded(bool): whether needs prerecorded audio file.
-        target_language(str): translation output language.
+        input_language(str): transcription input language.
+        output_language(str): translation output language.
     """
 
     def __init__(
@@ -49,6 +50,7 @@ class gameTranslator:
             prerecorded(bool): whether needs prerecorded audio file.
             input_language(str): transcription input language.
             output_language(str): translation output language.
+            elapsed_time(float): duration once openai_translation is called to returned.
         """
         self.pre_recorded = prerecorded
         self.transcription_model = transcription_model
@@ -58,6 +60,7 @@ class gameTranslator:
         self.filepath = filepath
         self.input_language = input_language.lower()
         self.output_language = output_language.lower()
+        self.elapsed_time = 0
 
     def show_translator_info(self):
         """
@@ -89,8 +92,16 @@ class gameTranslator:
         print("Output language : {}".format(self.output_language))
         print("****************************************")
 
-    def show_time(self, elapsed_time):
-        print(f"Elapsed time: {elapsed_time:.3f} seconds")
+    def show_time(self):
+        """
+        Show elapsed time for transcription and translation, including audio recording.
+        
+        Args:
+            None
+        Returns:
+            None
+        """
+        print(f"Elapsed time: {self.elapsed_time:.3f} seconds")
 
     def record_audio(self):
         """
@@ -180,7 +191,8 @@ class gameTranslator:
 
         res = translate_sentence(text, self.output_language)
         end_time = time.time()
-        self.show_time(end_time - start_time)
+        self.elapsed_time = end_time - start_time
+        self.show_time()
         return res
 
 

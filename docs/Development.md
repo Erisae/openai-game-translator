@@ -1,7 +1,7 @@
 # Development
 
 ## Develop dependencies
-- Required python version: 3.9, 3.10.
+- Required python version: >=3.7, <3.11.
 - Clone openai-game-translator from git.
     ```shell
     git clone https://github.com/Erisae/openai-game-translator.git
@@ -14,6 +14,7 @@
     ```
 - Install development dependencies.
     ```shell
+    cd openai-game-translator
     make develop
     ```
 

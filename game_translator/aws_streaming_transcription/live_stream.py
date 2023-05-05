@@ -25,7 +25,11 @@ class LiveEventHandler(TranscriptResultStreamHandler):
                 self.last = alt.transcript
 
 
-async def live_transcribe(input_language: str, audio_min_rms=AUDIO_MIN_RMS, max_low_audio_flag=MAX_LOW_AUDIO_FLAG):
+async def live_transcribe(
+    input_language: str,
+    audio_min_rms=AUDIO_MIN_RMS,
+    max_low_audio_flag=MAX_LOW_AUDIO_FLAG,
+):
     client = TranscribeStreamingClient(region=REGION)
 
     stream = await client.start_stream_transcription(

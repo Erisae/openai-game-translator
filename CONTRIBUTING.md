@@ -1,7 +1,7 @@
 # Contributing to openai-game-translator
 
 ## Get Started
-1. Required python version: 3.9, 3.10.
+1. Required python version: >=3.7, <3.11.
 2. Clone openai-game-translator from git.
     ```shell
     git clone https://github.com/Erisae/openai-game-translator.git

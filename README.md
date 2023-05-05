@@ -33,6 +33,7 @@ pip install openai-game-translator
 Install from github repository
 ```shell
 git clone https://github.com/Erisae/openai-game-translator
+cd openai-game-translator
 make install
 ```
 
