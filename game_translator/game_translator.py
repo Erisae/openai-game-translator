@@ -95,7 +95,7 @@ class gameTranslator:
     def show_time(self):
         """
         Show elapsed time for transcription and translation, including audio recording.
-        
+
         Args:
             None
         Returns:
