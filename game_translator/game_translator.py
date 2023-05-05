@@ -56,8 +56,8 @@ class gameTranslator:
         self.apikey = xunfei_apikey
         self.apisecret = xunfei_apisecret
         self.filepath = filepath
-        self.input_language = input_language
-        self.output_language = output_language
+        self.input_language = input_language.lower()
+        self.output_language = output_language.lower()
 
     def show_translator_info(self):
         """

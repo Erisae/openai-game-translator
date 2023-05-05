@@ -11,7 +11,7 @@ ChatGPT API based video game audio translator application and web service
 
 
 ## Overview
-A game translation app that uses the ChatGPT API to recognize in-game speech (and even game visuals) and provide smooth text translations on platforms like Switch and PS5, thanks to the powerful language abilities of GPT.
+A game translation app that uses the ChatGPT API to recognize in-game speech (TODO: and even game visuals) and provide smooth text translations on platforms like Switch and PS5, thanks to the powerful language abilities of GPT.
 
 ## Prerequisites
 If you don't already have local credentials setup for your AWS account, you can follow this [guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) for configuring them using the AWS CLI.
@@ -19,7 +19,7 @@ If you don't already have local credentials setup for your AWS account, you can 
 - Since we use amazon-transcribe SDK, which is built on top of the [AWS Common Runtime (CRT)](<https://github.com/awslabs/aws-crt-python>), non-standard operating systems may need to compile these libraries themselves.
 - Should at least set `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables and in `[default]` profile `~/.aws/credentials`.
   
-Also, ensure that you have portaudio
+Also, ensure that you have `portaudio`, which is a prerequisite for `pyAudio`
 ```shell
 sudo apt install portaudio19-dev # linux
 brew install portaudio # macos
@@ -33,29 +33,30 @@ pip install openai-game-translator
 Install from github repository
 ```shell
 git clone https://github.com/Erisae/openai-game-translator
-make build
 make install
 ```
 
 ## Quick Start
-In terminal, run command `translate` to get audio translated to text.
-```shell
-translate --xunfei_appid <xf_appid> --xunfei_apikey  <xf_apikey> --xunfei_apisecret <xf_apisecret> --openai_key <openai_key> -t <model> -o <language> --pre_recorded <use_prerecored> --file <audio_path>
-```
-- `<xf_appid>`, `<xf_apikey>`, `<xf_apisecret>`: audio transcription api tokens from [xunfei](https://www.xfyun.cn/).
-- `<openai_key>`: [openai api key](https://platform.openai.com/account/api-keys) is required for inferencing GPT model to translate.
-- `<model>`: audio transcription model to choose, select from `aws_pre`, `aws_live`, `xunfei`.
-- `<language>`: translation target language, default is English.
-- `<use_prerecorded>`: whether to use prerecorded audio (1: yes, 0:no). When not using prerecorded audio, should ensure your device has sound card and the will detect and record audio for you.
-- `<audio_path>`: the path for prerecorded audio or to store the detected audio.
 
-In script, use the simplest `aws_live` transcription model and openai translation to defaultly translate to English.
+### Terminal Usage
+To translate audio to text in the terminal, use the command `translate`. The simplest way to achieve this is through `AWS`'s real-time media transcription and `GPT`-based translation, as shown below:
+```shell
+translate --openai_key <openai_key> -i <input_language> -o <output_language> aws_live
+```
+- `<openai_key>`: A valid [OpenAI API key](https://platform.openai.com/account/api-keys) is required for inferencing GPT model to translate.
+- `<input_language>`: Language of the audio to be transcribed.
+- `<output_language>`: Target language for the translation.
+- `aws_live`: This option uses the AWS live stream transcription model, allowing the voice data stream to be uploaded to AWS services using the AWS SDK while recording the voice. Other available audio transcription models include `aws_pre` and `xunfei`, but they require additional arguments such as `--file`, `--pre_recorded`, and audio transcription API tokens from [xunfei](https://www.xfyun.cn/).
+- Note that `aws_live`, `aws_pre`, `xunfei` work as subcommands. Ensure that `openai_key`, `input_language` and `output_language` are assigned before running these subcommands, as otherwise the argument values might not be recognized correctly.  For more information about how to use the package in command line, refer to the [documentation](https://erisae.github.io/openai-game-translator/). 
+
+### Script Usage
+In script, simply pass `aws_live` to initialize a `gameTranslator`, `translator.openai_translation()` will translate Chinese audio to English text.
 ```python
 import openai
-from game_translator import  gameTranslator
+from game_translator import gameTranslator
 
 openai.api_key = "<openai_key>"
-translator = gameTranslator("aws_live")
+translator = gameTranslator("aws_live", input_language="chinese", output_language="english")
 translator.openai_translation()
 ```
 
