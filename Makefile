@@ -68,7 +68,7 @@ show-version:
 	bump2version --dry-run --allow-dirty setup.py --list | grep current | awk -F= '{print $2}'
 
 bump:
-	bump2version --current-version $(current_version) --new-version $(new_version) game_translator/_version.py pyproject.toml --allow-dirty	
+	bump2version --current-version $(current_version) --new-version $(new_version) game_translator/_version.py pyproject.toml docs/conf.py --allow-dirty	
 
 patch:
 	bump2version patch
