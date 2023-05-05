@@ -105,6 +105,10 @@ You can initialize multiple types of translators, using different transcription 
     ```python
     translator4 = gameTranslator("xunfei", xunfei_appid="xunfei_appid", xunfei_apikey="xunfei_apikey", xunfei_apisecret="xunfei_apisecret", filepath="path_to_store", prerecorded=False)
     ```
+```eval_rst
+.. note::
+   * xunfei generally only transcribe Chinese and English (for free).
+```
 - Initialize a translation model with xunfei speed transcription and prerecorded audio file,
     ```python
     translator5 = gameTranslator("xunfei", xunfei_appid="xunfei_appid", xunfei_apikey="xunfei_apikey", xunfei_apisecret="xunfei_apisecret",  filepath="path_to_prerecorded", prerecorded=True)
