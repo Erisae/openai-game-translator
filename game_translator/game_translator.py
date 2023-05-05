@@ -65,6 +65,7 @@ class gameTranslator:
     def show_translator_info(self):
         """
         Show basic configurations of translator.
+
         Args:
             None
         Returns:
