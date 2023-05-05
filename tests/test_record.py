@@ -3,7 +3,7 @@ import os
 import sys
 import io
 import pyaudio
-import numpy as np
+
 sys.path.append(os.path.abspath("../"))
 from unittest.mock import patch
 from game_translator.audio.record import Detector
@@ -27,10 +27,8 @@ class TestRecord(unittest.TestCase):
         with patch("sys.stdout", new=io.StringIO()) as fake_out:
             detector = Detector(pyaudio_instance=mock_pyaudio, max_low_audio_flag=mock_flag, recording=False)
             detector.detect_audio()
-            
-        self.assertTrue(
-            "detecting finished ..." in fake_out.getvalue().strip()
-        )
+
+        self.assertIn("detecting finished...", fake_out.getvalue().strip())
         self.assertEqual(len(detector.audio_frames), mock_flag)
 
 

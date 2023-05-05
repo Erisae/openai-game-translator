@@ -20,8 +20,10 @@ class TranslatorTest(unittest.TestCase):
             xunfei_appid=self.appid,
             xunfei_apikey=self.apikey,
             xunfei_apisecret=self.apisecret,
-            prerecorded=1,
-            output_language="English",
+            prerecorded=True,
+            input_language="chinese",
+            output_language="english",
+            
         )
 
         with patch("sys.stdout", new=io.StringIO()) as fake_out:
@@ -41,9 +43,9 @@ class TranslatorTest(unittest.TestCase):
     def test_aws_pre_openai(self):
         translator3 = gameTranslator(
             "aws_pre",
-            prerecorded=1,
+            prerecorded=True,
             filepath="../game_translator/audio/audio_sample_little.wav",
-            output_language="English",
+            output_language="english",
         )
 
         with patch("sys.stdout", new=io.StringIO()) as fake_out:

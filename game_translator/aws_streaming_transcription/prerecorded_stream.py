@@ -1,5 +1,6 @@
 # reference: https://github.com/awslabs/amazon-transcribe-streaming-sdk
 # document:  https://docs.aws.amazon.com/transcribe/latest/dg/streaming.html
+# aws transcription supported languages: https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html
 """
 default installation requires aws-crt~=0.14 but 0.14 can not be installed
     - install manually by cloning the sdk and change setup.py and setup.cfg 's awscrt requiremente to >= 0.14
@@ -12,30 +13,14 @@ import asyncio
 # with `pip install aiofile`.
 import aiofile
 
-from difflib import SequenceMatcher
 from amazon_transcribe.client import TranscribeStreamingClient
 from amazon_transcribe.handlers import TranscriptResultStreamHandler
 from amazon_transcribe.model import TranscriptEvent
 from amazon_transcribe.utils import apply_realtime_delay
-
-"""
-Here's an example of a custom event handler you can extend to
-process the returned transcription results as needed. This
-handler will simply print the text out to your interpreter.
-"""
+from .settings import *
 
 
-SAMPLE_RATE = 16000
-BYTES_PER_SAMPLE = 2
-CHANNEL_NUMS = 1
-
-# An example file can be found at tests/integration/assets/test.wav
-AUDIO_PATH = "../audio/test.wav"
-CHUNK_SIZE = 1024 * 8
-REGION = "us-west-2"
-
-
-class MyEventHandler(TranscriptResultStreamHandler):
+class PrerecordedEventHandler(TranscriptResultStreamHandler):
     def __init__(self, output_stream):
         super().__init__(output_stream)
         self.all_results = []
@@ -52,31 +37,13 @@ class MyEventHandler(TranscriptResultStreamHandler):
                 self.last = alt.transcript
 
 
-def similarity(a, b):
-    return SequenceMatcher(None, a, b).ratio()
-
-
-def select_result(sentences):
-    # filter and concact
-    s = ""
-    last = ""
-    for cur in sentences:
-        if similarity(last, cur) < 0.5:  # not similar: concact
-            s += last
-            last = cur
-        elif len(last) < len(cur):  # similar and longer: update
-            last = cur
-    s += last
-    return "".join(s)
-
-
-async def basic_transcribe(audio_path: str):
+async def prerecorded_transcribe(audio_path: str, input_language: str):
     # Setup up our client with our chosen AWS region
     client = TranscribeStreamingClient(region=REGION)
 
     # Start transcription to generate our async stream
     stream = await client.start_stream_transcription(
-        language_code="en-US",
+        language_code=LANGUAGE_MAPPING[input_language],
         media_sample_rate_hz=SAMPLE_RATE,
         media_encoding="pcm",
     )
@@ -93,7 +60,7 @@ async def basic_transcribe(audio_path: str):
         await stream.input_stream.end_stream()
 
     # Instantiate our handler and start processing events
-    handler = MyEventHandler(stream.output_stream)
+    handler = PrerecordedEventHandler(stream.output_stream)
     await asyncio.gather(write_chunks(), handler.handle_events())
 
     s = select_result(handler.all_results)

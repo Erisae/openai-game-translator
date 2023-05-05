@@ -20,7 +20,7 @@ def translate_sentence(content, language):
 
     """
 
-    prompt = "please translate the following to " + language + " : " + content
+    prompt = "translate the following to " + language + " : " + content
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo", messages=[{"role": "user", "content": prompt}]
     )
