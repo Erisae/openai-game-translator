@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Getting Started &mdash; openai-game-translator 1.1.0 documentation</title>
+  <title>Getting Started &mdash; openai-game-translator 1.2.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -106,7 +106,7 @@ brew<span class="w"> </span>install<span class="w"> </span>portaudio<span class=
 </div>
 <p>Install from github repository</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Erisae/openai-game-translator
-make<span class="w"> </span>build
+<span class="nb">cd</span><span class="w"> </span>openai-game-translator
 make<span class="w"> </span>install
 </pre></div>
 </div>
@@ -124,22 +124,58 @@ make<span class="w"> </span>install
 </div>
 <div class="section" id="terminal-usage">
 <h2>Terminal Usage<a class="headerlink" href="#terminal-usage" title="Permalink to this heading">¶</a></h2>
-<p>In terminal, run command <code class="docutils literal notranslate"><span class="pre">translate</span></code> to get audio translated to text.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>translate<span class="w"> </span>--xunfei_appid<span class="w"> </span>&lt;xf_appid&gt;<span class="w"> </span>--xunfei_apikey<span class="w">  </span>&lt;xf_apikey&gt;<span class="w"> </span>--xunfei_apisecret<span class="w"> </span>&lt;xf_apisecret&gt;<span class="w"> </span>--openai_key<span class="w"> </span>&lt;openai_key&gt;<span class="w"> </span>-t<span class="w"> </span>&lt;model&gt;<span class="w"> </span>-o<span class="w"> </span>&lt;language&gt;<span class="w"> </span>--pre_recorded<span class="w"> </span>&lt;use_prerecored&gt;<span class="w"> </span>--file<span class="w"> </span>&lt;audio_path&gt;
+<p>In terminal, run command <code class="docutils literal notranslate"><span class="pre">translate</span></code> to get audio translated to text. Multiple ways are provided:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">aws_live</span></code> transcription <strong>(best currently)</strong>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>translate<span class="w"> </span>--openai_key<span class="w"> </span>&lt;openai_key&gt;<span class="w"> </span>-i<span class="w"> </span>&lt;input_language&gt;<span class="w"> </span>-o<span class="w"> </span>&lt;output_language&gt;<span class="w"> </span>aws_live
 </pre></div>
 </div>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;openai_key&gt;</span></code>: A valid <a class="reference external" href="https://platform.openai.com/account/api-keys">OpenAI API key</a> is required for inferencing GPT model to translate.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;input_language&gt;</span></code>: Language of the audio to be transcribed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;output_language&gt;</span></code>: Target language for the translation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">aws_live</span></code>: This option uses the AWS live stream transcription model, allowing the voice data stream to be uploaded to AWS services using the AWS SDK while recording the voice. This process does not require the generation of temporary audio files or the use of prerecorded files.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">aws_pre</span></code> transcription with prerecorded media:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>translate<span class="w"> </span>--openai_key<span class="w"> </span>&lt;openai_key&gt;<span class="w"> </span>-i<span class="w"> </span>&lt;input_language&gt;<span class="w"> </span>-o<span class="w"> </span>&lt;output_language&gt;<span class="w"> </span>aws_pre<span class="w"> </span>--file<span class="w"> </span>&lt;file_path&gt;<span class="w"> </span>--pre_recorded
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">aws_pre</span></code>: This option uses AWS pre-recorded stream transcription model. Prerecorded file is uploaded to AWS service using AWS SDK.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;file_path&gt;</span></code>: Path for the prerecorded media.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--pre_recorded</span></code>: Token specifying prerecorded media is needed.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">aws_pre</span></code> transcription without prerecorded media:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>translate<span class="w"> </span>--openai_key<span class="w"> </span>&lt;openai_key&gt;<span class="w"> </span>-i<span class="w"> </span>&lt;input_language&gt;<span class="w"> </span>-o<span class="w"> </span>&lt;output_language&gt;<span class="w"> </span>aws_pre<span class="w"> </span>--file<span class="w"> </span>&lt;file_path&gt;
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;file_path&gt;</span></code>: Path to store temporary audio file while translating.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xunfei</span></code> transcription with prerecorded media:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>translate<span class="w"> </span>--openai_key<span class="w"> </span>&lt;openai_key&gt;<span class="w"> </span>-i<span class="w"> </span>&lt;input_language&gt;<span class="w"> </span>-o<span class="w"> </span>&lt;output_language&gt;<span class="w"> </span>xunfei<span class="w"> </span>--xunfei_appid<span class="w"> </span>&lt;xf_appid&gt;<span class="w"> </span>--xunfei_apikey<span class="w">  </span>&lt;xf_apikey&gt;<span class="w"> </span>--xunfei_apisecret<span class="w"> </span>&lt;xf_apisecret&gt;<span class="w"> </span>--file<span class="w"> </span>&lt;file_path&gt;<span class="w"> </span>--pre_recorded<span class="w"> </span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">xunfei</span></code>: This option uses xunfei’s transcription model.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">&lt;xf_appid&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;xf_apikey&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;xf_apisecret&gt;</span></code>: audio transcription api tokens from <a class="reference external" href="https://www.xfyun.cn/">xunfei</a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;openai_key&gt;</span></code>: <a class="reference external" href="https://platform.openai.com/account/api-keys">openai api key</a> is required for inferencing GPT model to translate.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;model&gt;</span></code>: audio transcription model to choose, select from <code class="docutils literal notranslate"><span class="pre">aws_pre</span></code>, <code class="docutils literal notranslate"><span class="pre">aws_live</span></code>, <code class="docutils literal notranslate"><span class="pre">xunfei</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;language&gt;</span></code>: translation target language, default is English.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;use_prerecorded&gt;</span></code>: whether to use prerecorded audio (1: yes, 0:no). When not using prerecorded audio, should ensure your device has sound card and the will detect and record audio for you.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;audio_path&gt;</span></code>: the path for prerecorded audio or to store the detected audio.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xunfei</span></code> transcription without prerecorded media:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>translate<span class="w"> </span>--openai_key<span class="w"> </span>&lt;openai_key&gt;<span class="w"> </span>-i<span class="w"> </span>&lt;input_language&gt;<span class="w"> </span>-o<span class="w"> </span>&lt;output_language&gt;<span class="w"> </span>xunfei<span class="w"> </span>--xunfei_appid<span class="w"> </span>&lt;xf_appid&gt;<span class="w"> </span>--xunfei_apikey<span class="w">  </span>&lt;xf_apikey&gt;<span class="w"> </span>--xunfei_apisecret<span class="w"> </span>&lt;xf_apisecret&gt;<span class="w"> </span>--file<span class="w"> </span>&lt;file_path&gt;
+</pre></div>
+</div>
+</li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p><cite>&lt;openai_key&gt;</cite>, <cite>&lt;model&gt;</cite>, <cite>&lt;use_prerecorded&gt;</cite> are required parameters.</p></li>
+<li><p><cite>aws_live</cite>, <cite>aws_pre</cite> and <cite>xunfei</cite> are subcommands, whether <cite>–file</cite>, <cite>–pre_recorded</cite> and the xunfei tokens are required are constrained by these subcommands.</p></li>
+<li><p>Ensure that <cite>openai_key</cite>, <cite>input_language</cite> and <cite>output_language</cite> are assigned before running these subcommands, as otherwise the argument values might not be recognized correctly.</p></li>
+<li><p>In terms of transcription accuracy, I would recommend to use <cite>aws_live</cite> as <cite>aws_pre</cite> and <cite>xunfei</cite> have high requirements for the quality of audio files (prominent human voice, no significant noise). The latter two actually performs well in ideal conditions (and is a substitute for those who can not access AWS).</p></li>
 </ul>
 </div>
 </div>
@@ -150,23 +186,23 @@ make<span class="w"> </span>install
 <span class="kn">from</span> <span class="nn">game_translator</span> <span class="kn">import</span> <span class="n">gameTranslator</span>
 </pre></div>
 </div>
-<p>Then fill in openai api key for global usage</p>
+<p>Then fill in OpenAI API key for global usage</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="s2">&quot;&lt;openai_key&gt;&quot;</span>
 </pre></div>
 </div>
 <p>You can initialize multiple types of translators, using different transcription techniques</p>
 <ul>
-<li><p>Initialize a translation model with amazon live transcription</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator1</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;aws_live&quot;</span><span class="p">)</span>
+<li><p>Initialize a translation model with Amazon live transcription</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator1</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;aws_live&quot;</span><span class="p">)</span> <span class="c1"># by default, input language is Chinese and output language is English</span>
 </pre></div>
 </div>
 </li>
-<li><p>Initialize a translation model with amazon prerecorded transcription and no prerecorded audio file,</p>
+<li><p>Initialize a translation model with Amazon prerecorded transcription and no prerecorded audio file,</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator2</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;aws_pre&quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;path_to_store&quot;</span><span class="p">,</span> <span class="n">prerecorded</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
-<li><p>Initialize a translation model with amazon prerecorded transcription and prerecorded audio file,</p>
+<li><p>Initialize a translation model with Amazon prerecorded transcription and prerecorded audio file,</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator3</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;aws_pre&quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;path_to_prerecorded&quot;</span><span class="p">,</span> <span class="n">prerecorded</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -176,6 +212,14 @@ make<span class="w"> </span>install
 </pre></div>
 </div>
 </li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>xunfei generally only transcribe Chinese and English (for free).</p></li>
+</ul>
+</div>
+<ul>
 <li><p>Initialize a translation model with xunfei speed transcription and prerecorded audio file,</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator5</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;xunfei&quot;</span><span class="p">,</span> <span class="n">xunfei_appid</span><span class="o">=</span><span class="s2">&quot;xunfei_appid&quot;</span><span class="p">,</span> <span class="n">xunfei_apikey</span><span class="o">=</span><span class="s2">&quot;xunfei_apikey&quot;</span><span class="p">,</span> <span class="n">xunfei_apisecret</span><span class="o">=</span><span class="s2">&quot;xunfei_apisecret&quot;</span><span class="p">,</span>  <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;path_to_prerecorded&quot;</span><span class="p">,</span> <span class="n">prerecorded</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>

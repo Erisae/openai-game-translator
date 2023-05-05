@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Functions &mdash; openai-game-translator 1.1.0 documentation</title>
+  <title>Functions &mdash; openai-game-translator 1.2.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -52,11 +52,14 @@
 <li class="toctree-l3"><a class="reference internal" href="#game_translator.game_translator.gameTranslator.apikey"><code class="docutils literal notranslate"><span class="pre">gameTranslator.apikey</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#game_translator.game_translator.gameTranslator.apisecret"><code class="docutils literal notranslate"><span class="pre">gameTranslator.apisecret</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#game_translator.game_translator.gameTranslator.pre_recorded"><code class="docutils literal notranslate"><span class="pre">gameTranslator.pre_recorded</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#game_translator.game_translator.gameTranslator.target_language"><code class="docutils literal notranslate"><span class="pre">gameTranslator.target_language</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game_translator.game_translator.gameTranslator.input_language"><code class="docutils literal notranslate"><span class="pre">gameTranslator.input_language</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game_translator.game_translator.gameTranslator.output_language"><code class="docutils literal notranslate"><span class="pre">gameTranslator.output_language</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#game_translator.game_translator.gameTranslator.aws_live_transcription"><code class="docutils literal notranslate"><span class="pre">gameTranslator.aws_live_transcription()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#game_translator.game_translator.gameTranslator.aws_prerecored_transcription"><code class="docutils literal notranslate"><span class="pre">gameTranslator.aws_prerecored_transcription()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#game_translator.game_translator.gameTranslator.openai_translation"><code class="docutils literal notranslate"><span class="pre">gameTranslator.openai_translation()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#game_translator.game_translator.gameTranslator.record_audio"><code class="docutils literal notranslate"><span class="pre">gameTranslator.record_audio()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game_translator.game_translator.gameTranslator.show_time"><code class="docutils literal notranslate"><span class="pre">gameTranslator.show_time()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game_translator.game_translator.gameTranslator.show_translator_info"><code class="docutils literal notranslate"><span class="pre">gameTranslator.show_translator_info()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#game_translator.game_translator.gameTranslator.xunfei_transcription"><code class="docutils literal notranslate"><span class="pre">gameTranslator.xunfei_transcription()</span></code></a></li>
 </ul>
 </li>
@@ -95,7 +98,7 @@
 <span id="functions"></span><h1>Functions<a class="headerlink" href="#module-game_translator.game_translator" title="Permalink to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="game_translator.game_translator.gameTranslator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game_translator.game_translator.</span></span><span class="sig-name descname"><span class="pre">gameTranslator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transcription_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xunfei_appid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xunfei_apikey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xunfei_apisecret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prerecorded</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_language</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'English'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#game_translator.game_translator.gameTranslator" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game_translator.game_translator.</span></span><span class="sig-name descname"><span class="pre">gameTranslator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transcription_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xunfei_appid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xunfei_apikey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xunfei_apisecret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prerecorded</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_language</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'chinese'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_language</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'english'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#game_translator.game_translator.gameTranslator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>An audio game translator class,</p>
 <p>This class provides functinalities for …</p>
@@ -166,8 +169,19 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="game_translator.game_translator.gameTranslator.target_language">
-<span class="sig-name descname"><span class="pre">target_language</span></span><a class="headerlink" href="#game_translator.game_translator.gameTranslator.target_language" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="game_translator.game_translator.gameTranslator.input_language">
+<span class="sig-name descname"><span class="pre">input_language</span></span><a class="headerlink" href="#game_translator.game_translator.gameTranslator.input_language" title="Permalink to this definition">¶</a></dt>
+<dd><p>transcription input language.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="game_translator.game_translator.gameTranslator.output_language">
+<span class="sig-name descname"><span class="pre">output_language</span></span><a class="headerlink" href="#game_translator.game_translator.gameTranslator.output_language" title="Permalink to this definition">¶</a></dt>
 <dd><p>translation output language.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -179,7 +193,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="game_translator.game_translator.gameTranslator.aws_live_transcription">
 <span class="sig-name descname"><span class="pre">aws_live_transcription</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#game_translator.game_translator.gameTranslator.aws_live_transcription" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transcripts audio file with aws_live transcription. Record with sounddevice and send stream to aws simultaneously.</p>
+<dd><p>Transcripts audio file with aws_live transcription. Record with pyaudio and send stream to aws simultaneously.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>None</strong> – </p>
@@ -237,6 +251,32 @@
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="game_translator.game_translator.gameTranslator.show_time">
+<span class="sig-name descname"><span class="pre">show_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#game_translator.game_translator.gameTranslator.show_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show elapsed time for transcription and translation, including audio recording.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="game_translator.game_translator.gameTranslator.show_translator_info">
+<span class="sig-name descname"><span class="pre">show_translator_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#game_translator.game_translator.gameTranslator.show_translator_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show basic configurations of translator.
+:param None:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
 </dd></dl>

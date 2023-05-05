@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Examples &mdash; openai-game-translator 1.1.0 documentation</title>
+  <title>Examples &mdash; openai-game-translator 1.2.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -91,15 +91,32 @@
 </div>
 <div class="section" id="aws-live-version">
 <h2>AWS live version<a class="headerlink" href="#aws-live-version" title="Permalink to this heading">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;aws_live&quot;</span><span class="p">,</span> <span class="n">output_language</span><span class="o">=</span><span class="s2">&quot;Chinese&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;aws_live&quot;</span><span class="p">)</span>
 <span class="n">translator</span><span class="o">.</span><span class="n">openai_translation</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>transcription<span class="w"> </span>success...
-Eh,<span class="w"> </span>weather<span class="w"> </span>is<span class="w"> </span>nice<span class="w"> </span>today.
-translation<span class="w"> </span>success...
-嗯，今天天气不错。
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>****************************************
+Transcription model : aws_live
+Using prerecorded audio file : None
+Input  language : chinese
+Output language : english
+****************************************
+start detecting audio...
+current rms: ##                  |
+detecting finished...
+transcription success...
+明天的期末考试我能考多少
+translation success...
+How much can I score on tomorrow&#39;s final exam?
+Elapsed time: 9.155 seconds
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>Once calling <cite>openai_translation()</cite>, an overview of game translator settings would be displayed.</p></li>
+<li><p>A line with “current rms: ” will occur when recording audio, there is a “|” indicating low volume. If “#”s does not surpass “|” for some time, the system considers the end of the speech and stops recording automatically.</p></li>
+</ul>
 </div>
 </div>
 <div class="section" id="aws-prerecorded-version">
@@ -110,24 +127,40 @@ translation<span class="w"> </span>success...
 <span class="n">translator</span><span class="o">.</span><span class="n">openai_translation</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>start<span class="w"> </span>detecting<span class="w"> </span>audio<span class="w"> </span>...<span class="w"> </span>
-detecting<span class="w"> </span>finished<span class="w"> </span>...<span class="w"> </span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>****************************************
+Transcription<span class="w"> </span>model<span class="w"> </span>:<span class="w"> </span>aws_pre
+Using<span class="w"> </span>prerecorded<span class="w"> </span>audio<span class="w"> </span>file<span class="w"> </span>:<span class="w"> </span>None
+Temporery<span class="w"> </span>audio<span class="w"> </span>file<span class="w"> </span>generated<span class="w"> </span>by<span class="w"> </span><span class="o">[</span>aws_pre<span class="o">]</span><span class="w"> </span>saves<span class="w"> </span>at<span class="w"> </span>:<span class="w"> </span>/Users/arika/Desktop/openai-game-translator/game_translator/audio/temp.wav
+Input<span class="w">  </span>language<span class="w"> </span>:<span class="w"> </span>chinese
+Output<span class="w"> </span>language<span class="w"> </span>:<span class="w"> </span>english
+****************************************
+start<span class="w"> </span>detecting<span class="w"> </span>audio...
+current<span class="w"> </span>rms:<span class="w"> </span><span class="c1">##                  |</span>
+detecting<span class="w"> </span>finished...
 transcription<span class="w"> </span>success...
-Eh,<span class="w"> </span>weather<span class="w"> </span>is<span class="w"> </span>nice<span class="w"> </span>today.
+啊吗？考试嗯嗯。
 translation<span class="w"> </span>success...
-嗯，今天天气不错。
+What?<span class="w"> </span>Exam,<span class="w"> </span>um-hmm.
+Elapsed<span class="w"> </span>time:<span class="w"> </span><span class="m">22</span>.377<span class="w"> </span>seconds
 </pre></div>
 </div>
 </li>
-<li><p>using a prerecorded ausio file</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;aws_pre&quot;</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="s2">&quot;./audio/temp.wav&quot;</span><span class="p">,</span> <span class="n">prerecorded</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">output_language</span><span class="o">=</span><span class="s2">&quot;Chinese&quot;</span><span class="p">)</span>
+<li><p>using a prerecorded audio file</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;aws_pre&quot;</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="s2">&quot;./audio/audio_sample_little.wav&quot;</span><span class="p">,</span> <span class="n">prerecorded</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">translator</span><span class="o">.</span><span class="n">openai_translation</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>transcription<span class="w"> </span>success...
-Eh,<span class="w"> </span>weather<span class="w"> </span>is<span class="w"> </span>nice<span class="w"> </span>today.
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>****************************************
+Transcription<span class="w"> </span>model<span class="w"> </span>:<span class="w"> </span>aws_pre
+Using<span class="w"> </span>prerecorded<span class="w"> </span>audio<span class="w"> </span>file<span class="w"> </span>:<span class="w"> </span>/Users/arika/Desktop/openai-game-translator/game_translator/audio/audio_sample_little.wav
+Input<span class="w">  </span>language<span class="w"> </span>:<span class="w"> </span>chinese
+Output<span class="w"> </span>language<span class="w"> </span>:<span class="w"> </span>english
+****************************************
+transcription<span class="w"> </span>success...
+科大讯飞是中国最大的智能语音技术提供商。
 translation<span class="w"> </span>success...
-嗯，今天天气不错。
+iFLYTEK<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>largest<span class="w"> </span>provider<span class="w"> </span>of<span class="w"> </span>intelligent<span class="w"> </span>speech<span class="w"> </span>technology<span class="w"> </span><span class="k">in</span><span class="w"> </span>China.
+Elapsed<span class="w"> </span>time:<span class="w"> </span><span class="m">6</span>.614<span class="w"> </span>seconds
 </pre></div>
 </div>
 </li>
@@ -137,28 +170,27 @@ translation<span class="w"> </span>success...
 <h2>Xunfei version<a class="headerlink" href="#xunfei-version" title="Permalink to this heading">¶</a></h2>
 <ul>
 <li><p>using a prerecorded audio file</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;xunfei&quot;</span><span class="p">,</span> <span class="n">xunfei_appid</span><span class="o">=</span><span class="s2">&quot;xxx&quot;</span><span class="p">,</span> <span class="n">xunfei_apikey</span><span class="o">=</span><span class="s2">&quot;xxx&quot;</span><span class="p">,</span> <span class="n">xunfei_apisecret</span><span class="o">=</span><span class="s2">&quot;xxx&quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;./audio/audio_sample_little.wav&quot;</span><span class="p">,</span> <span class="n">prerecorded</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">output_language</span><span class="o">=</span><span class="s2">&quot;English&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;xunfei&quot;</span><span class="p">,</span> <span class="n">xunfei_appid</span><span class="o">=</span><span class="s2">&quot;xxx&quot;</span><span class="p">,</span> <span class="n">xunfei_apikey</span><span class="o">=</span><span class="s2">&quot;xxx&quot;</span><span class="p">,</span> <span class="n">xunfei_apisecret</span><span class="o">=</span><span class="s2">&quot;xxx&quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;./audio/audio_sample_little.wav&quot;</span><span class="p">,</span> <span class="n">prerecorded</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">translator</span><span class="o">.</span><span class="n">openai_translaion</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>transcription<span class="w"> </span>success...
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>****************************************
+Transcription<span class="w"> </span>model<span class="w"> </span>:<span class="w"> </span>xunfei
+Using<span class="w"> </span>prerecorded<span class="w"> </span>audio<span class="w"> </span>file<span class="w"> </span>:<span class="w"> </span>/Users/arika/Desktop/openai-game-translator/game_translator/audio/audio_sample_little.wav
+Input<span class="w">  </span>language<span class="w"> </span>:<span class="w"> </span>chinese
+Output<span class="w"> </span>language<span class="w"> </span>:<span class="w"> </span>english
+****************************************
+transcription<span class="w"> </span>success...
 科大讯飞是中国最大的智能语音技术提供商。
 translation<span class="w"> </span>success...
-iFlytek<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>largest<span class="w"> </span>intelligent<span class="w"> </span>voice<span class="w"> </span>technology<span class="w"> </span>provider<span class="w"> </span><span class="k">in</span><span class="w"> </span>China.
+iFlytek<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>largest<span class="w"> </span>provider<span class="w"> </span>of<span class="w"> </span>intelligent<span class="w"> </span>voice<span class="w"> </span>technology<span class="w"> </span><span class="k">in</span><span class="w"> </span>China.
+Elapsed<span class="w"> </span>time:<span class="w"> </span><span class="m">9</span>.434<span class="w"> </span>seconds
 </pre></div>
 </div>
 </li>
 <li><p>not using a prerecorded audio file</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;xunfei&quot;</span><span class="p">,</span> <span class="n">xunfei_appid</span><span class="o">=</span><span class="s2">&quot;xxx&quot;</span><span class="p">,</span> <span class="n">xunfei_apikey</span><span class="o">=</span><span class="s2">&quot;xxx&quot;</span><span class="p">,</span> <span class="n">xunfei_apisecret</span><span class="o">=</span><span class="s2">&quot;xxx&quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;./audio/temp.wav&quot;</span><span class="p">,</span> <span class="n">prerecorded</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">output_language</span><span class="o">=</span><span class="s2">&quot;English&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">translator</span> <span class="o">=</span> <span class="n">gameTranslator</span><span class="p">(</span><span class="s2">&quot;xunfei&quot;</span><span class="p">,</span> <span class="n">xunfei_appid</span><span class="o">=</span><span class="s2">&quot;xxx&quot;</span><span class="p">,</span> <span class="n">xunfei_apikey</span><span class="o">=</span><span class="s2">&quot;xxx&quot;</span><span class="p">,</span> <span class="n">xunfei_apisecret</span><span class="o">=</span><span class="s2">&quot;xxx&quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;./audio/temp.wav&quot;</span><span class="p">,</span> <span class="n">prerecorded</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">translator</span><span class="o">.</span><span class="n">openai_translaion</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>start<span class="w"> </span>detecting<span class="w"> </span>audio<span class="w"> </span>...<span class="w"> </span>
-detecting<span class="w"> </span>finished<span class="w"> </span>...<span class="w"> </span>
-transcription<span class="w"> </span>success...
-科大讯飞是中国最大的智能语音技术提供商。
-translation<span class="w"> </span>success...
-iFlytek<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>largest<span class="w"> </span>intelligent<span class="w"> </span>voice<span class="w"> </span>technology<span class="w"> </span>provider<span class="w"> </span><span class="k">in</span><span class="w"> </span>China.
 </pre></div>
 </div>
 </li>
