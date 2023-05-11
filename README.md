@@ -61,6 +61,46 @@ translator = gameTranslator("aws_live", input_language="chinese", output_languag
 translator.openai_translation()
 ```
 
+## Examples
+### Shell xunfei prerecorded example
+```shell
+translate --openai_key <openai_key>  -o english -i chinese xunfei --xunfei_appid <xunfei_appid> --xunfei_apikey  <xunfei_apikey> --xunfei_apisecret <xunfei_apisecret> --file audio_sample_little.wav --pre_recorded
+```
+```shell
+****************************************
+Transcription model : xunfei
+Using prerecorded audio file : audio_sample_little.wav
+Input  language : chinese
+Output language : english
+****************************************
+transcription success...
+科大讯飞是中国最大的智能语音技术提供商。
+translation success...
+iFlytek is the largest intelligent voice technology provider in China.
+Elapsed time: 3.813 seconds
+```
+### Script AWS live example
+```python
+translator = gameTranslator("aws_live")
+translator.openai_translation()
+```
+```shell
+****************************************
+Transcription model : aws_live
+Using prerecorded audio file : None
+Input  language : chinese
+Output language : english
+****************************************
+start detecting audio...
+current rms: ##                  |
+detecting finished...
+transcription success...
+明天的期末考试我能考多少
+translation success...
+How much can I score on tomorrow's final exam?
+Elapsed time: 9.155 seconds
+```
+
 ## Contributing
 See more at [CONTRIBUTING.md](./CONTRIBUTING.md)
 
